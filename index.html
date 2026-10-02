@@ -1,0 +1,1639 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>注意宁的澳大利亚之旅</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;user-select:none}
+html,body{width:100%;height:100%;background:#0a0c1a;overflow:hidden;font-family:"Microsoft YaHei","PingFang SC",sans-serif;color:#eee}
+#wrap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
+#cv{display:block;image-rendering:pixelated;image-rendering:crisp-edges;background:#000}
+#ui{position:absolute;left:0;top:0;pointer-events:none;overflow:hidden}
+#ui>*{pointer-events:auto}
+.btn{background:#2b3350;border:2px solid #6d7bb0;border-bottom-width:4px;padding:5px 12px;color:#e8ecff;
+ font-size:13px;cursor:pointer;font-family:inherit;letter-spacing:1px}
+.btn:hover{background:#3d4878}
+.btn:active{border-bottom-width:2px;transform:translateY(2px)}
+.btn.g{background:#2e6b4f;border-color:#78d6a5;color:#dfffe9}
+.hidden{display:none!important}
+.screen{position:absolute;left:0;top:0;width:100%;height:100%}
+#titleBox{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);text-align:center}
+#titleBox h1{font-size:34px;letter-spacing:4px;color:#ffe9a8;text-shadow:3px 3px 0 #7a3b1e,6px 6px 0 rgba(0,0,0,.5);margin-bottom:6px}
+#titleBox h2{font-size:13px;letter-spacing:6px;color:#9fd7ff;margin-bottom:26px;font-weight:normal}
+#titleBox .btn{margin:0 6px;font-size:15px;padding:8px 20px}
+.tip{margin-top:22px;font-size:11px;color:#8b93b8;line-height:1.8}
+.card{background:#1b2140;border:3px solid #6d7bb0;box-shadow:0 6px 0 rgba(0,0,0,.5);border-radius:4px}
+#creator{background:rgba(6,8,20,.92)}
+#creMain{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:14px}
+#previewBox{padding:10px;text-align:center}
+#pv{background:#10142c;border:2px solid #4a5480;display:block}
+#previewBox .nm{margin-top:6px;font-size:12px;color:#ffe9a8}
+#optBox{width:330px;padding:12px 14px}
+#optBox h3{font-size:14px;color:#9fd7ff;letter-spacing:2px;margin-bottom:8px}
+.row{display:flex;align-items:center;margin-bottom:7px;font-size:12px}
+.row .lb{width:52px;color:#aab4dd}
+.row .sw{width:16px;height:16px;border:1px solid #000;margin-left:4px;cursor:pointer}
+.row .sw.on{outline:2px solid #ffe9a8}
+.chip{display:flex;align-items:center;justify-content:center;width:22px;height:20px;background:#333d63;
+ border:1px solid #6d7bb0;color:#dfe4ff;cursor:pointer;font-size:12px;margin:0 3px}
+.chip:hover{background:#4a5488}
+.val{min-width:74px;text-align:center;color:#ffe9a8;font-size:12px}
+.nameRow{margin:6px 0 10px}
+.nameRow input{background:#10142c;border:2px solid #4a5480;color:#ffe9a8;padding:4px 8px;width:150px;
+ font-size:13px;font-family:inherit;outline:none}
+#creBtns{display:flex;gap:8px;margin-top:10px}
+#hud{position:absolute;left:0;top:0;width:100%;padding:5px 6px;display:flex;justify-content:space-between;
+ align-items:flex-start;font-size:12px}
+#hudL{background:rgba(16,20,44,.8);border:2px solid #4a5480;padding:3px 9px;line-height:1.5}
+#hudL b{color:#ffe9a8}
+#hudR{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+#hudR .btn{font-size:11px;padding:3px 7px;border-bottom-width:3px}
+#hint{position:absolute;left:50%;bottom:76px;transform:translateX(-50%);background:rgba(16,20,44,.86);
+ border:2px solid #ffe9a8;color:#ffe9a8;padding:2px 10px;font-size:12px;border-radius:3px}
+#dlg{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);width:92%;height:64px;
+ background:#141a36;border:3px solid #7c8ac4;box-shadow:0 4px 0 rgba(0,0,0,.5);display:flex;padding:6px 10px 6px 6px}
+#dlgPv{width:52px;height:52px;background:#0e1230;border:2px solid #4a5480;flex:none}
+#dlgT{flex:1;padding:2px 6px 0 10px;font-size:13px;line-height:1.55;color:#eef1ff}
+#dlgT .who{color:#7ee0b0;font-size:12px;display:block;margin-bottom:1px}
+#dlgA{position:absolute;right:8px;bottom:4px;color:#ffe9a8;font-size:12px;animation:bl .6s infinite alternate}
+@keyframes bl{from{opacity:.2}to{opacity:1}}
+#panel{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:76%;height:74%;padding:12px}
+#panel h3{font-size:15px;color:#ffe9a8;letter-spacing:2px;margin-bottom:8px}
+#panel .tabs{display:flex;gap:6px;margin-bottom:8px}
+#panel .tab{font-size:12px;padding:3px 12px;background:#333d63;border:2px solid #6d7bb0;cursor:pointer}
+#panel .tab.on{background:#4a5c9e;color:#ffe9a8}
+#panelBody{height:calc(100% - 70px);overflow-y:auto;padding-right:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:6px}
+.item{background:#10142c;border:2px solid #4a5480;padding:5px 6px;font-size:11px;line-height:1.5}
+.item b{color:#ffe9a8;display:block;font-size:12px}
+.item.lock{opacity:.45;color:#7d86ad}
+.item .no{color:#5d6690}
+.closeX{position:absolute;right:8px;top:8px;font-size:12px;padding:2px 9px}
+#cards{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:80%;padding:14px}
+#cards h3{font-size:15px;color:#ffe9a8;margin-bottom:10px;text-align:center;letter-spacing:3px}
+.cardRow{display:flex;gap:10px;justify-content:center}
+.sc{width:150px;background:#10142c;border:3px solid #4a5480;padding:8px;text-align:center;cursor:pointer}
+.sc:hover{border-color:#ffe9a8;transform:translateY(-3px)}
+.sc .ic{font-size:30px;line-height:1.2}
+.sc .t{font-size:13px;color:#ffe9a8;margin:4px 0 3px}
+.sc .d{font-size:10px;color:#8b93b8;line-height:1.5}
+#toast{position:absolute;left:50%;top:52px;transform:translateX(-50%);background:#1e5c3a;
+ border:2px solid #7ee0b0;color:#dfffe9;padding:5px 16px;font-size:13px;border-radius:3px;
+ transition:opacity .3s;opacity:0;pointer-events:none}
+#toast.show{opacity:1}
+#fishUI{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:270px;padding:12px;text-align:center}
+#fishUI .st{font-size:14px;color:#ffe9a8;margin-bottom:6px}
+#fishUI .bar{height:16px;background:#10142c;border:2px solid #4a5480;margin:8px 0;position:relative;overflow:hidden}
+#fishUI .zone{position:absolute;top:0;height:100%;background:#2e8b57}
+#fishUI .cur{position:absolute;top:-2px;height:20px;width:4px;background:#ffe9a8}
+#fishUI .sp{font-size:11px;color:#9fb0e0;line-height:1.6}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <canvas id="cv" width="480" height="270"></canvas>
+  <div id="ui">
+    <div id="titleScr" class="screen">
+      <div id="titleBox">
+        <h1>注意宁的澳大利亚之旅</h1>
+        <h2>A PIXEL TRIP TO MELBOURNE</h2>
+        <button class="btn" id="btnNew">开始新旅程</button>
+        <button class="btn" id="btnCont">继续旅程</button>
+        <div class="tip">移动：WASD / 方向键 &nbsp;·&nbsp; 互动：E &nbsp;·&nbsp; 小金鱼：G<br>
+          图鉴：I &nbsp;·&nbsp; 地图：M &nbsp;·&nbsp; 对话：E / 空格</div>
+      </div>
+    </div>
+
+    <div id="creator" class="screen hidden">
+      <div id="creMain">
+        <div id="previewBox" class="card">
+          <canvas id="pv" width="90" height="140"></canvas>
+          <div class="nm" id="pvName">宁</div>
+        </div>
+        <div id="optBox" class="card">
+          <h3>◆ 角色创建</h3>
+          <div class="nameRow row"><span class="lb">姓名</span>
+            <input id="inName" maxlength="8" value="宁"></div>
+          <div id="optRows"></div>
+          <div id="creBtns">
+            <button class="btn" id="btnRandom">随机</button>
+            <button class="btn g" id="btnStart">出发！</button>
+            <button class="btn hidden" id="btnCreBack">返回</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="hud" class="hidden">
+      <div id="hudL"></div>
+      <div id="hudR">
+        <button class="btn" id="bMap">地图 M</button>
+        <button class="btn" id="bScene">场景</button>
+        <button class="btn" id="bBook">图鉴 I</button>
+        <button class="btn" id="bCloth">换装</button>
+        <button class="btn g" id="bFish">小金鱼 G</button>
+      </div>
+    </div>
+    <div id="hint" class="hidden"></div>
+
+    <div id="dlg" class="hidden">
+      <canvas id="dlgPv" width="52" height="52"></canvas>
+      <div id="dlgT"></div>
+      <div id="dlgA">▼ E</div>
+    </div>
+
+    <div id="panel" class="card hidden">
+      <button class="btn closeX" id="pClose">关闭</button>
+      <h3 id="pTitle">图鉴</h3>
+      <div class="tabs" id="pTabs"></div>
+      <div id="panelBody"></div>
+    </div>
+
+    <div id="cards" class="card hidden">
+      <h3>◆ 选择场景</h3>
+      <div class="cardRow" id="cardRow"></div>
+    </div>
+
+    <div id="fishUI" class="card hidden">
+      <div class="st" id="fSt">抛竿…</div>
+      <div class="bar"><div class="zone" id="fZone"></div><div class="cur" id="fCur"></div></div>
+      <div class="sp" id="fSp">按住 空格 收线，让游标停在绿色区域！</div>
+    </div>
+
+    <div id="toast"></div>
+  </div>
+</div>
+<script>
+"use strict";
+/* ================= 基础 ================= */
+var cv=document.getElementById('cv'),g=cv.getContext('2d');
+var W=480,H=270;
+g.imageSmoothingEnabled=false;
+var ui=document.getElementById('ui'),wrap=document.getElementById('wrap');
+var SCALE=2;
+function resize(){
+  SCALE=Math.max(1,Math.floor(Math.min(window.innerWidth/W,(window.innerHeight-4)/H)));
+  cv.style.width=(W*SCALE)+'px';cv.style.height=(H*SCALE)+'px';
+  wrap.style.width=(W*SCALE)+'px';wrap.style.height=(H*SCALE)+'px';
+  ui.style.width=(W*SCALE)+'px';ui.style.height=(H*SCALE)+'px';
+}
+window.addEventListener('resize',resize);resize();
+
+function $(id){return document.getElementById(id)}
+function hide(){for(var i=0;i<arguments.length;i++)$(arguments[i]).classList.add('hidden')}
+function show(){for(var i=0;i<arguments.length;i++)$(arguments[i]).classList.remove('hidden')}
+function clamp(v,a,b){return v<a?a:(v>b?b:v)}
+function rnd(a,b){return a+Math.random()*(b-a)}
+function irnd(a,b){return Math.floor(rnd(a,b+1))}
+function dist(ax,ay,bx,by){var dx=ax-bx,dy=ay-by;return Math.sqrt(dx*dx+dy*dy)}
+function shade(hex,amt){
+  var n=parseInt(hex.slice(1),16),r=(n>>16)&255,gg=(n>>8)&255,b=n&255;
+  r=clamp(Math.round(r+amt),0,255);gg=clamp(Math.round(gg+amt),0,255);b=clamp(Math.round(b+amt),0,255);
+  return '#'+((1<<24)+(r<<16)+(gg<<8)+b).toString(16).slice(1);
+}
+function R(x,y,w,h,c){g.fillStyle=c;g.fillRect(x|0,y|0,w|0,h|0)}
+function txt(s,x,y,c,size,align){
+  g.fillStyle=c||'#fff';g.textAlign=align||'left';g.textBaseline='top';
+  g.font='bold '+(size||8)+'px "Courier New",monospace';
+  g.fillText(s,x,y);
+}
+var toastT=0;
+function toast(msg){
+  var t=$('toast');t.textContent=msg;t.classList.add('show');toastT=2.2;
+}
+
+/* ================= 调色 ================= */
+var HAIRC=['#2b2320','#6b4226','#c98a3d','#e6cf8a','#d94f4f','#4f6ad9','#8d8d96','#c86bd0'];
+var SKINC=['#f5d9bb','#eabf97','#d6a074','#b37b52','#8a5a38'];
+var EYEC=['#2b2b33','#3a5a8c','#4a7a4a','#5a3a8c'];
+var TOPC=['#3f7fbf','#d9534f','#5cb85c','#f0ad4e','#9b59b6','#ec749c','#e9e9ee','#39414f'];
+var BOTC=['#39496b','#2f3140','#8a5a34','#c0392b','#8e44ad','#16a085','#dfe6e9','#b5651d'];
+var SHOEC=['#3a2d24','#1e1e24','#7d2020','#274b8a','#2e7d32','#c9c9cf'];
+
+var HAIRS=['短发','中长发','长发','丸子头','双马尾','卷卷发'];
+var TOPS=['T恤','连帽卫衣','衬衫','小西装','条纹衫','毛衣'];
+var BOTS=['长裤','牛仔裤','短裤','半身裙','长裙'];
+var SHOES=['运动鞋','短靴','小皮鞋'];
+
+function defaultLook(){
+  return {hair:0,hairC:1,skin:0,eye:0,top:0,topC:0,bot:0,botC:0,shoe:0,shoeC:0};
+}
+
+/* ============ 角色绘制 x,y=脚底中心 frame0~3 ============ */
+function drawChar(c,x,y,L,dir,frame,s){
+  s=s||1;
+  x=Math.round(x);y=Math.round(y);
+  c.save();
+  if(dir==='right'){c.translate(x*2,0);c.scale(-1,1);}
+  function P(dx,dy,w,h,col){
+    c.fillStyle=col;
+    c.fillRect(Math.round(x+dx*s),Math.round(y+dy*s),Math.max(1,Math.round(w*s)),Math.max(1,Math.round(h*s)));
+  }
+  var side=(dir==='left'||dir==='right');
+  var hc=HAIRC[L.hairC],sk=SKINC[L.skin],ec=EYEC[L.eye];
+  var tp=TOPC[L.topC],tpD=shade(tp,-42);
+  var bt=BOTC[L.botC],btD=shade(bt,-35);
+  var sh=SHOEC[L.shoeC];
+  var liftL=(frame===1),liftR=(frame===3);
+  var skirt=(L.bot>=3);
+
+  c.globalAlpha=.28;P(-5,0,10,2,'#000');c.globalAlpha=1;
+
+  /* 腿 */
+  if(skirt){
+    P(-3,liftL?-5:-4,2,liftL?3:4,sk);
+    P(1,liftR?-5:-4,2,liftR?3:4,sk);
+  }else{
+    if(side){P(-3,liftL?-4:-6,3,liftL?4:6,bt);P(0,liftR?-4:-6,3,liftR?4:6,btD);}
+    else{P(-4,liftL?-4:-6,3,liftL?4:6,bt);P(1,liftR?-4:-6,3,liftR?4:6,bt);}
+  }
+  /* 鞋 */
+  var lsy=liftL?-4:0,rsy=liftR?-4:0;
+  if(L.shoe===1){P(-5,lsy-2,4,4,sh);P(1,rsy-2,4,4,sh);}
+  else{P(-5,lsy-2,4,2,sh);P(1,rsy-2,4,2,sh);}
+
+  /* 下装 */
+  if(skirt){
+    if(L.bot===4){P(-5,-9,10,2,bt);P(-6,-7,12,4,bt);P(-6,-3,12,3,btD);}
+    else{P(-5,-9,10,2,bt);P(-6,-7,12,4,bt);}
+  }else{
+    P(-5,-9,10,4,bt);
+    if(L.bot===1){P(-5,-9,1,4,'#5a7db5');P(4,-9,1,4,'#5a7db5');}
+    if(L.bot===2)P(-5,-7,10,1,btD);
+  }
+
+  /* 手臂 */
+  var aSw=(frame===1)?1:(frame===3)?-1:0;
+  P(-7,-15+aSw,2,6,tp);P(-7,-9+aSw,2,2,sk);
+  P(5,-15-aSw,2,6,tp);P(5,-9-aSw,2,2,sk);
+
+  /* 上衣 */
+  P(-5,-16,10,7,tp);
+  if(L.top===1){P(-5,-17,10,2,tpD);P(-3,-12,6,3,tpD);}
+  else if(L.top===2){P(-2,-16,4,6,'#f4f4ee');P(-3,-16,3,2,'#fff');P(1,-16,3,2,'#fff');P(0,-14,1,5,'#c8c8c0');}
+  else if(L.top===3){P(-2,-16,4,6,'#f2f2ee');P(-4,-16,3,7,tpD);P(1,-16,3,7,tpD);}
+  else if(L.top===4){for(var i=0;i<3;i++)P(-5,-15+i*2,10,1,tpD);}
+  else if(L.top===5){P(-5,-10,10,1,tpD);P(-5,-16,10,1,tpD);}
+
+  /* 头 */
+  P(-5,-26,10,10,sk);
+  if(side){P(-4,-19,1,2,shade(sk,-30));}
+  /* 脸 */
+  if(dir==='down'){
+    P(-3,-22,2,2,ec);P(1,-22,2,2,ec);
+    P(-3,-22,1,1,'#fff');P(1,-22,1,1,'#fff');
+    P(-1,-18,2,1,shade(sk,-55));
+    P(-4,-19,1,1,'#f0a0a0');P(3,-19,1,1,'#f0a0a0');
+  }else if(side){
+    P(-3,-22,2,2,ec);P(-3,-22,1,1,'#fff');
+  }
+
+  /* 头发 */
+  drawHair(P,L.hair,dir,hc,sk);
+
+  /* 裙子前摆盖腿 */
+  if(skirt&&L.bot===4)P(-6,-4,12,1,btD);
+
+  c.restore();
+}
+
+function drawHair(P,style,dir,hc,sk){
+  var d=shade(hc,-30),l=shade(hc,28);
+  var isSide=(dir==='left'||dir==='right'),back=(dir==='up');
+  if(style===0){ /* 短发 */
+    P(-6,-27,12,5,hc);
+    P(-6,-23,2,3,hc);P(4,-23,2,3,hc);
+    if(back)P(-5,-24,10,7,hc);
+    P(-4,-25,3,1,l);
+  }else if(style===1){ /* 中长发 */
+    P(-6,-27,12,5,hc);
+    P(-6,-23,3,7,hc);P(3,-23,3,7,hc);
+    if(back)P(-5,-24,10,10,hc);
+    if(isSide)P(2,-23,4,8,hc);
+    P(-4,-25,3,1,l);
+  }else if(style===2){ /* 长发 */
+    P(-6,-27,12,5,hc);
+    P(-7,-23,3,13,hc);P(4,-23,3,13,hc);
+    if(back||isSide)P(-6,-24,12,15,hc);
+    P(-6,-24,3,12,hc);
+    P(-4,-25,3,1,l);
+  }else if(style===3){ /* 丸子头 */
+    P(-6,-27,12,5,hc);
+    P(-2,-31,5,5,hc);P(-1,-30,2,1,l);
+    P(-6,-23,2,3,hc);P(4,-23,2,3,hc);
+    if(back)P(-5,-24,10,7,hc);
+  }else if(style===4){ /* 双马尾 */
+    P(-6,-27,12,5,hc);
+    P(-9,-25,3,8,hc);P(6,-25,3,8,hc);
+    P(-9,-25,3,2,l);P(6,-25,3,2,l);
+    P(-6,-23,2,3,hc);P(4,-23,2,3,hc);
+    if(back)P(-5,-24,10,7,hc);
+  }else{ /* 卷卷发 */
+    P(-7,-28,14,6,hc);
+    P(-7,-24,3,4,hc);P(4,-24,3,4,hc);
+    P(-6,-29,3,3,hc);P(3,-29,3,3,hc);
+    P(-4,-30,3,2,l);
+    if(back)P(-5,-24,10,7,hc);
+  }
+}
+/* ================= 游戏状态 ================= */
+var G={
+  mode:'title',          // title intro creator map play
+  name:'宁',
+  look:defaultLook(),
+  scene:'station',       // station beach island house
+  items:{},              // 收集到的物品 id->true
+  fish:{},               // 鱼 id->次数
+  lake:[],               // 湖里的鱼 id 数组
+  goldHome:false,        // 小金鱼是否在家园
+  mapSel:null
+};
+var SAVE_KEY='au_trip_ning_v1';
+function saveGame(){
+  try{localStorage.setItem(SAVE_KEY,JSON.stringify({
+    name:G.name,look:G.look,scene:G.scene,items:G.items,fish:G.fish,lake:G.lake,goldHome:G.goldHome
+  }));}catch(e){}
+}
+function loadGame(){
+  try{
+    var s=localStorage.getItem(SAVE_KEY);
+    if(!s)return false;
+    var d=JSON.parse(s);
+    G.name=d.name||'宁';G.look=d.look||defaultLook();G.scene=d.scene||'station';
+    G.items=d.items||{};G.fish=d.fish||{};G.lake=d.lake||[];G.goldHome=!!d.goldHome;
+    return true;
+  }catch(e){return false;}
+}
+
+/* ================= 输入 ================= */
+var keys={};
+window.addEventListener('keydown',function(e){
+  keys[e.code]=true;
+  if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].indexOf(e.code)>=0)e.preventDefault();
+  onKey(e.code);
+});
+window.addEventListener('keyup',function(e){keys[e.code]=false;});
+
+function onKey(code){
+  if(G.mode==='intro'){ if(code==='Space'||code==='Enter'||code==='KeyE'){skipIntro();} return; }
+  if(fish.on)return;
+  if(code==='KeyE'||code==='Space'||code==='Enter'){
+    if(dialog.active){nextDialog();return;}
+    if(G.mode==='play'&&!panelOpen()&&!cardsOpen()){tryInteract();return;}
+  }
+  if(dialog.active)return;
+  if(panelOpen()||cardsOpen()){ if(code==='Escape')closeAllPanels(); return; }
+  if(G.mode==='map'){
+    if(code==='Escape'||code==='KeyM')enterScene(G.scene);
+    if(code==='KeyG')toggleGoldfish();
+    if(code==='KeyI')openBook();
+    return;
+  }
+  if(G.mode==='play'){
+    if(code==='KeyG')toggleGoldfish();
+    if(code==='KeyI')openBook();
+    if(code==='KeyM')openMap();
+  }
+}
+
+/* ================= 对话系统 ================= */
+var dialog={active:false,lines:[],idx:0,who:'',look:null,onEnd:null,lineShown:0,timer:0};
+function startDialog(who,look,lines,onEnd){
+  dialog.active=true;dialog.lines=lines;dialog.idx=0;dialog.who=who;
+  dialog.look=look;dialog.onEnd=onEnd||null;dialog.lineShown=0;dialog.timer=0;
+  show('dlg');renderDialog();
+}
+function renderDialog(){
+  var full=dialog.lines[dialog.idx]||'';
+  var d=full.slice(0,dialog.lineShown||0);
+  $('dlgT').innerHTML='<span class="who">'+dialog.who+'</span>'+d;
+  if(dialog.lineShown===0||dialog.lineShown>=full.length)drawPortrait($('dlgPv'),dialog.look,dialog.who);
+}
+function nextDialog(){
+  var full=dialog.lines[dialog.idx]||'';
+  if(dialog.lineShown<full.length){dialog.lineShown=full.length;renderDialog();return;}
+  dialog.idx++;
+  if(dialog.idx>=dialog.lines.length){
+    dialog.active=false;hide('dlg');
+    if(dialog.onEnd)dialog.onEnd();
+    return;
+  }
+  dialog.lineShown=0;dialog.timer=0;renderDialog();
+}
+function drawPortrait(cvs,look,who){
+  var c=cvs.getContext('2d');c.imageSmoothingEnabled=false;
+  c.clearRect(0,0,cvs.width,cvs.height);
+  c.fillStyle='#0e1230';c.fillRect(0,0,cvs.width,cvs.height);
+  if(look){
+    drawChar(c,cvs.width/2,cvs.height-4,look,'down',0,1.6);
+  }else{
+    c.fillStyle='#7ee0b0';c.font='bold 20px monospace';c.textAlign='center';
+    c.fillText(who?who.charAt(0):'?',cvs.width/2,cvs.height/2+6);
+  }
+}
+
+/* ================= 面板 ================= */
+function panelOpen(){return !$('panel').classList.contains('hidden')}
+function cardsOpen(){return !$('cards').classList.contains('hidden')}
+function closeAllPanels(){hide('panel','cards');}
+$('pClose').onclick=function(){hide('panel')};
+
+/* ================= 物品 / 鱼 数据 ================= */
+var ITEMS=[
+  {id:'ticket',  n:'复古车票',  s:'station', d:'弗林德斯街车站的黄铜车票，边角磨得发亮。'},
+  {id:'clock',   n:'车站时钟',  s:'station', d:'“约会就在时钟下”——墨尔本人的老约定。'},
+  {id:'postcard',n:'涂鸦明信片',s:'station', d:'霍西尔巷的一角，被喷漆盖满的浪漫。'},
+  {id:'tram',    n:'电车徽章',  s:'station', d:'绿色老电车的纪念徽，别在包上刚刚好。'},
+  {id:'shell',   n:'扇贝贝壳',  s:'beach',   d:'圣基尔达沙滩上捡到的，凑近能听见海。'},
+  {id:'icecream',n:'甜筒纸杯',  s:'beach',   d:'海湾边的开心果冰淇淋，融得比走得快。'},
+  {id:'penguin', n:'企鹅图章',  s:'beach',   d:'小企鹅归巢的纪念章，晚上才会盖上。'},
+  {id:'drift',   n:'浮木小块',  s:'beach',   d:'栈桥下捡的浮木，像一块被海驯服的星星。'}
+];
+var FISHES=[
+  {id:'clown', n:'小丑鱼',   c:'#f08a2a', rare:0},
+  {id:'taraki',n:'金带鲷',   c:'#e6c84a', rare:0},
+  {id:'flat',  n:'扁头鱼',   c:'#8fb3c9', rare:0},
+  {id:'snork', n:'海鳗',     c:'#6f9a5a', rare:1},
+  {id:'jelly', n:'月光水母', c:'#b48ad9', rare:1},
+  {id:'seahor',n:'海马',     c:'#e68a5a', rare:1},
+  {id:'ray',   n:'黄貂鱼',   c:'#a08a6a', rare:2},
+  {id:'shark', n:'小鲨鱼',   c:'#7d8ea0', rare:2},
+  {id:'octo',  n:'蓝环章鱼', c:'#5aa8c9', rare:3},
+  {id:'pengu', n:'神仙企鹅', c:'#3a4a5c', rare:3}
+];
+
+/* ================= 收集 ================= */
+function collectItem(id){
+  if(G.items[id]){toast('已经收集过了～');return;}
+  G.items[id]=true;
+  var it=null;for(var i=0;i<ITEMS.length;i++)if(ITEMS[i].id===id)it=ITEMS[i];
+  toast('获得纪念品：'+(it?it.n:id)+'！');
+  saveGame();
+}
+function addFish(id){
+  G.fish[id]=(G.fish[id]||0)+1;
+  var f=null;for(var i=0;i<FISHES.length;i++)if(FISHES[i].id===id)f=FISHES[i];
+  toast('钓到了 '+(f?f.n:id)+'！已存入图鉴');
+  saveGame();
+}
+/* ================= 场景通用 ================= */
+var player={x:240,y:210,dir:'down',frame:0,animT:0,moving:false};
+var gold={x:200,y:215,dir:'down',frame:0,animT:0,visible:true};
+var SCENES={
+  station:{name:'弗林德斯街火车站',region:'墨尔本 CBD'},
+  beach:  {name:'圣基尔达海滩',region:'墨尔本南岸'},
+  island: {name:'家园小岛',region:'你的秘密基地'},
+  house:  {name:'温馨小屋',region:'家园小岛'}
+};
+function enterScene(id,px,py){
+  G.scene=id;
+  player.x=px!==undefined?px:240;
+  player.y=py!==undefined?py:215;
+  gold.x=player.x-24;gold.y=player.y+6;
+  closeAllPanels();hide('titleScr','creator','dlg','hint');
+  dialog.active=false;
+  G.mode='play';
+  show('hud');updateHud();
+  bounds.y1=(id==='station')?168:(id==='beach')?204:(id==='island')?150:170;
+  bounds.y2=H-18;
+  if(id==='island'){bounds.x1=48;bounds.x2=432;bounds.y2=252;}
+  else if(id==='house'){bounds.x1=16;bounds.x2=464;}
+  else{bounds.x1=16;bounds.x2=W-16;}
+  buildInteractives();
+  saveGame();
+}
+function updateHud(){
+  var s=SCENES[G.scene];
+  $('hudL').innerHTML='<b>'+G.name+'</b> · '+s.name+'<br><span style="color:#8b93b8">'+s.region+'</span>';
+  $('bFish').textContent=G.goldHome?'叫小金鱼 G':'小金鱼回家 G';
+}
+
+/* ================= 碰撞/移动 ================= */
+var bounds={x1:16,x2:W-16,y1:168,y2:H-18};
+function movePlayer(dt){
+  var sp=68,dx=0,dy=0;
+  if(keys.ArrowLeft||keys.KeyA)dx-=1;
+  if(keys.ArrowRight||keys.KeyD)dx+=1;
+  if(keys.ArrowUp||keys.KeyW)dy-=1;
+  if(keys.ArrowDown||keys.KeyS)dy+=1;
+  player.moving=!!(dx||dy);
+  if(player.moving){
+    if(dx&&dy){dx*=0.707;dy*=0.707;}
+    var step=sp*dt,nx=clamp(player.x+dx*step,bounds.x1,bounds.x2),ny=clamp(player.y,bounds.y1,bounds.y2);
+    if(dx&&!blocked(nx,ny))player.x=nx;
+    ny=clamp(player.y+dy*step,bounds.y1,bounds.y2);nx=player.x;
+    if(dy&&!blocked(nx,ny))player.y=ny;
+    if(Math.abs(dx)>Math.abs(dy))player.dir=dx<0?'left':'right';
+    else player.dir=dy<0?'up':'down';
+    player.animT+=dt*8;player.frame=Math.floor(player.animT)%4;
+  }else{player.frame=0;player.animT=0;}
+}
+function updateGold(dt){
+  if(G.goldHome){
+    if(G.scene==='island'){gold.visible=true;gold.x=376;gold.y=202;gold.frame=0;gold.dir='down';}
+    else if(G.scene==='house'){gold.visible=true;gold.x=430;gold.y=230;gold.frame=0;gold.dir='down';}
+    else gold.visible=false;
+    return;
+  }
+  gold.visible=true;
+  var d=dist(gold.x,gold.y,player.x,player.y);
+  if(d>26){
+    var tx=player.x-18,ty=player.y+4,k=Math.min(1,dt*3.4);
+    var ox=gold.x,oy=gold.y;
+    gold.x+=(tx-gold.x)*k;gold.y+=(ty-gold.y)*k;
+    var ddx=gold.x-ox,ddy=gold.y-oy;
+    if(Math.abs(ddx)>Math.abs(ddy))gold.dir=ddx<0?'left':'right';
+    else if(ddy)gold.dir=ddy<0?'up':'down';
+    gold.animT+=dt*8;gold.frame=Math.floor(gold.animT)%4;
+  }else if(d<13){
+    gold.x+=(gold.x-player.x)*dt*2;gold.y+=(gold.y-player.y)*dt*2;gold.frame=0;
+  }else gold.frame=0;
+}
+function toggleGoldfish(){
+  G.goldHome=!G.goldHome;
+  toast(G.goldHome?'小金鱼：那我先回岛上等你啦！':'小金鱼：我来啦我来啦！');
+  updateHud();saveGame();
+}
+
+/* ================= 互动 ================= */
+var interactives=[];
+function nearestInteractive(){
+  var best=null,bd=1e9;
+  for(var i=0;i<interactives.length;i++){
+    var it=interactives[i],r=it.r||26;
+    var d=dist(player.x,player.y,it.x,it.y);
+    if(d<r&&d<bd){bd=d;best=it;}
+  }
+  return best;
+}
+function tryInteract(){
+  if(dialog.active)return;
+  var it=nearestInteractive();
+  if(it){it.fn();return;}
+  if(gold.visible&&!G.goldHome&&dist(player.x,player.y,gold.x,gold.y)<30){
+    startDialog('小金鱼',goldLook(),goldLines());
+  }
+}
+function goldLines(){
+  if(G.scene==='island')return ['“岛上的风都是甜的，你闻！”','“湖里的鱼我帮你数过啦，一共 '+G.lake.length+' 条。”'];
+  if(G.scene==='beach')return ['“海好大……我这种小金鱼下去会咸死的！”','“但是有你在就不怕啦。”'];
+  if(G.scene==='house')return ['“屋子小小的，但是很暖。”','“衣柜里那件衣服好看，你试试？”'];
+  return ['“这栋黄色的车站好像一块大蛋糕！”','“听说在时钟下面许愿会很灵哦。”'];
+}
+function updateHint(){
+  var el=$('hint');
+  if(dialog.active||panelOpen()||cardsOpen()||fish.on){el.classList.add('hidden');return;}
+  var it=nearestInteractive();
+  if(it){el.textContent='[E] '+it.label;el.classList.remove('hidden');return;}
+  if(gold.visible&&!G.goldHome&&dist(player.x,player.y,gold.x,gold.y)<30){
+    el.textContent='[E] 和小金鱼聊聊';el.classList.remove('hidden');return;
+  }
+  el.classList.add('hidden');
+}
+
+/* ================= 碰撞 ================= */
+var SOLIDS={
+  island:[{x:84,y:118,w:78,h:66},{x:276,y:164,w:96,h:54}],
+  house:[{x:32,y:162,w:112,h:64},{x:144,y:144,w:72,h:80},{x:296,y:132,w:88,h:54}]
+};
+function blocked(nx,ny){
+  var arr=SOLIDS[G.scene];
+  if(!arr)return false;
+  for(var i=0;i<arr.length;i++){
+    var s=arr[i];
+    if(nx>s.x-6&&nx<s.x+s.w+6&&ny>s.y-4&&ny<s.y+s.h+4)return true;
+  }
+  return false;
+}
+function buildInteractives(){
+  interactives=[];
+  if(G.scene==='station'){
+    interactives.push({x:118,y:200,label:'看时钟',fn:function(){
+      startDialog('古老的车站时钟',null,[
+        '五只小钟排成一排，指针各有各的脾气。',
+        '墨尔本人常说：“就在时钟下见。”——这是他们约定了上百年的暗号。'
+      ]);collectItem('clock');}});
+    interactives.push({x:448,y:214,label:'涂鸦墙',fn:function(){
+      startDialog('霍西尔巷的涂鸦墙',null,[
+        '层层叠叠的喷漆，最新的盖住最旧的。',
+        '撕下一张没被喷到的边角——当作明信片吧！'
+      ]);collectItem('postcard');}});
+    interactives.push({x:60,y:236,label:'电车轨道',fn:function(){
+      startDialog('绿色老电车',null,[
+        '“叮叮——”车身漆成墨尔本绿，编号 3-5-7。',
+        '售票员送你一枚电车徽章：留个纪念吧，旅客。'
+      ]);collectItem('tram');}});
+    interactives.push({x:300,y:250,label:'售票窗口',fn:function(){
+      startDialog('售票窗口',null,[
+        '“去哪儿？”“墨尔本。”“你已经在墨尔本了。”',
+        '窗口递出一张泛黄的复古车票：祝旅途愉快。'
+      ]);collectItem('ticket');}});
+    npcs_station();
+  }
+  if(G.scene==='beach'){
+    interactives.push({x:150,y:246,label:'沙滩贝壳',fn:function(){
+      startDialog('沙滩',null,[
+        '潮水退去，一枚扇贝躺在湿沙上，还带着海的温度。',
+        '把它收好吧，能听见海的那种。'
+      ]);collectItem('shell');}});
+    interactives.push({x:70,y:236,label:'冰淇淋摊',fn:function(){
+      startDialog('冰淇淋小车',null,[
+        '“开心果还是焦糖？”“都要。”',
+        '纸杯上还沾着一点海风的咸。'
+      ]);collectItem('icecream');}});
+    interactives.push({x:400,y:240,label:'栈桥尽头',fn:function(){
+      startDialog('栈桥',null,[
+        '栈桥的木缝里夹着一小块浮木，被海磨成了星星的形状。',
+        '收下它吧，海不会介意的。'
+      ]);collectItem('drift');}});
+    interactives.push({x:352,y:196,label:'观企鹅牌',fn:function(){
+      startDialog('企鹅归巢告示牌',null,[
+        '“日落后，小企鹅会一只只从海里回家。”',
+        '管理员敲了个章：企鹅图章，送给等到最后的人。'
+      ]);collectItem('penguin');}});
+    interactives.push({x:240,y:214,label:'抛竿钓鱼',fn:startFishing});
+    npcs_beach();
+  }
+  if(G.scene==='island'){
+    interactives.push({x:120,y:176,label:'走进小屋',fn:function(){enterScene('house',240,236);}});
+    interactives.push({x:322,y:196,label:'小湖泊',fn:openLake,r:40});
+    interactives.push({x:64,y:150,label:'小森林',fn:function(){
+      startDialog('小森林',null,[
+        '树影把阳光切成一小块一小块，像撒了一地的金子。',
+        '风吹过，叶子们窸窸窣窣地聊起天来。'
+      ]);}});
+    interactives.push({x:240,y:250,label:'沙滩',fn:function(){
+      startDialog('环岛沙滩',null,[
+        '这座小岛没有名字，也还没有别人知道。',
+        '浪一层一层地来，替你把脚印收好。'
+      ]);}});
+    if(G.goldHome){
+      interactives.push({x:376,y:202,label:'找小金鱼',r:34,fn:function(){
+        startDialog('小金鱼',goldLook(),[
+          '“这里好安静呀，湖泊像一块会呼吸的玻璃。”',
+          '“我把钓上来的鱼都安顿好了哦，你去看！”',
+          '“……不过我还是更想跟着你到处乱跑。”'
+        ]);}});
+    }
+  }
+  if(G.scene==='house'){
+    interactives.push({x:90,y:232,label:'床',fn:function(){
+      startDialog('小床',null,[
+        '被子上有太阳晒过的味道。眯一会儿吧……',
+        '（进度已保存）'
+      ],function(){saveGame();toast('已保存');});}});
+    interactives.push({x:180,y:234,label:'衣柜',fn:function(){openCreator(true);}});
+    interactives.push({x:340,y:200,label:'鱼缸书桌',fn:openLake,r:34});
+    interactives.push({x:240,y:252,label:'出门',fn:function(){enterScene('island',120,196);}});
+  }
+}
+/* NPC 数据 */
+var NPC_LOOKS={};
+function goldLook(){
+  return NPC_LOOKS.gold||(NPC_LOOKS.gold=(function(){
+    var l=defaultLook();l.hair=4;l.hairC=3;l.skin=0;l.eye=0;l.top=4;l.topC=3;l.bot=0;l.botC=7;l.shoe=0;l.shoeC=5;return l;
+  })());
+}
+function npcLook(key,mut){
+  if(!NPC_LOOKS[key]){var l=defaultLook();mut(l);NPC_LOOKS[key]=l;}
+  return NPC_LOOKS[key];
+}
+function addNpc(key,x,y,look,lines,label){
+  interactives.push({x:x,y:y,r:30,label:label||('和'+key+'聊天'),fn:function(){
+    startDialog(key,look,lines);
+  }});
+}
+function npcs_station(){
+  addNpc('电车司机老杰克',370,236,npcLook('jack',function(l){l.hair=0;l.hairC=6;l.skin=2;l.top=3;l.topC=0;l.bot=0;l.botC=1;l.shoe=1;}),
+    ['“上车请刷卡——开个玩笑，这是1980年。”','“墨尔本的电车比钟表还守时，除了下雨天。”']);
+  addNpc('街头画家小夏',430,196,npcLook('xia',function(l){l.hair=2;l.hairC=4;l.skin=0;l.top=5;l.topC=4;l.bot=4;l.botC=3;l.shoe=0;}),
+    ['“我在墙上画了只考拉，它昨晚偷偷换了姿势。”','“你这身衣服不错，要不要也入画？”']);
+  addNpc('卖报的老爷爷',70,206,npcLook('gr',function(l){l.hair=0;l.hairC=6;l.skin=3;l.top=2;l.topC=6;l.bot=0,l.botC=1;l.shoe=2;l.shoeC=1;}),
+    ['“头版：又有人在时钟下等了一辈子。”','“别急，好故事都在下一班车。”']);
+}
+function npcs_beach(){
+  addNpc('冲浪少年阿海',300,240,npcLook('hai',function(l){l.hair=1;l.hairC=1;l.skin=2;l.top=0;l.topC=2;l.bot=2;l.botC=6;l.shoe=0;}),
+    ['“浪好的时候，海会给你发微信。”','“圣基尔达的浪不凶，适合发呆。”']);
+  addNpc('看企鹅的老奶奶',370,220,npcLook('gm',function(l){l.hair=1;l.hairC=6;l.skin=1;l.top=5;l.topC=5;l.bot=4;l.botC=2;l.shoe=2;}),
+    ['“小企鹅夜里回家，走路一摇一摆，像会走路的毛绒球。”','“我年轻时等过一个人，后来学会了等企鹅。”']);
+  addNpc('卖冲浪板的阿姨',120,246,npcLook('ay',function(l){l.hair=3;l.hairC=2;l.skin=1;l.top=1;l.topC=6;l.bot=0;l.botC=4;l.shoe=0;}),
+    ['“板是借的，风是送的，勇气是自己的。”','“去海里之前，先跟海打个招呼。”']);
+}
+/* ================= 场景绘制 ================= */
+function sky(top,bot,n){
+  n=n||14;var hh=Math.ceil(150/n);
+  var c1=parseInt(top.slice(1),16),c2=parseInt(bot.slice(1),16);
+  for(var i=0;i<n;i++){
+    var t=i/(n-1);
+    var r=Math.round(((c1>>16)&255)+(((c2>>16)&255)-((c1>>16)&255))*t);
+    var gg=Math.round(((c1>>8)&255)+(((c2>>8)&255)-((c1>>8)&255))*t);
+    var b=Math.round((c1&255)+((c2&255)-(c1&255))*t);
+    R(0,i*hh,W,hh+1,'rgb('+r+','+gg+','+b+')');
+  }
+}
+function cloud(x,y,s){
+  R(x,y+4,26*s,7*s,'#fff');R(x+5,y,14*s,6*s,'#fff');R(x+16,y+6,12*s,5*s,'#f2f6ff');
+}
+function tree(x,y,s,c1,c2){
+  R(x-3*s,y-16*s,6*s,16*s,'#7a5636');
+  R(x-12*s,y-34*s,24*s,14*s,c1);
+  R(x-9*s,y-42*s,18*s,12*s,c1);
+  R(x-6*s,y-48*s,12*s,9*s,c2);
+  R(x-10*s,y-30*s,7*s,5*s,c2);
+}
+function palm(x,y){
+  R(x-2,y-30,4,30,'#8a6a44');
+  R(x-14,y-34,12,5,'#3f9a5a');R(x+2,y-34,12,5,'#3f9a5a');
+  R(x-11,y-39,9,5,'#4fb86e');R(x+2,y-39,9,5,'#4fb86e');
+  R(x-3,y-42,6,6,'#4fb86e');
+}
+
+/* ---------- 弗林德斯街火车站 ---------- */
+function drawStation(t){
+  sky('#7ec3e8','#cfe8f5');
+  var bld=['#8a93a8','#79839a','#98a1b5','#6d7791'];
+  for(var i=0;i<9;i++){
+    var bw=40+i%3*14,bh=40+((i*37)%46),bx=i*56-10;
+    R(bx,150-bh,bw,bh,bld[i%4]);
+    for(var wy=0;wy<bh-10;wy+=9)for(var wx=0;wx<bw-8;wx+=9)
+      R(bx+4+wx,150-bh+5+wy,4,4,(i+wy+wx)%3?'#ffe9a8':'#5a6480');
+  }
+  cloud(((t*6)%560)-60,26,1);cloud(((t*3.4+200)%560)-60,54,0.7);
+
+  R(60,72,360,78,'#e8c86a');
+  R(60,72,360,6,'#c9a44a');
+  R(56,64,368,10,'#7a9a6a');
+  R(210,44,60,22,'#7a9a6a');
+  R(216,36,48,10,'#6b8a5c');
+  R(224,30,32,8,'#5f7d52');
+  R(236,22,8,10,'#4f6b45');
+  R(232,50,16,16,'#f7f3e6');R(234,52,12,12,'#fffdf2');
+  R(239,54,2,5,'#2b2b33');R(240,58,4,2,'#2b2b33');
+  for(var w=0;w<8;w++){
+    var wx=74+w*44;
+    R(wx,96,26,34,'#4a5468');R(wx+2,98,22,30,'#8fd0e8');
+    R(wx+2,98,22,4,'#bfe6f5');
+    R(wx+12,98,2,30,'#4a5468');
+  }
+  R(222,104,36,46,'#3c4457');R(226,108,28,42,'#9fd8ea');
+  R(239,108,2,42,'#3c4457');
+  for(var c=0;c<5;c++){
+    var cx=86+c*66;
+    R(cx,78,18,14,'#f7f3e6');R(cx+2,80,14,10,'#fffdf2');
+    R(cx+8,82,1,4,'#2b2b33');R(cx+9,85,4,1,'#2b2b33');
+  }
+  txt('FLINDERS STREET STATION',141,136,'#3c3018',8,'center');
+
+  R(424,92,56,58,'#6b6478');
+  R(426,94,52,54,'#57506a');
+  R(430,100,20,10,'#e05a7a');R(452,112,22,8,'#5ad0c0');R(434,120,16,12,'#f0c04a');
+  R(456,128,18,10,'#a86bd0');R(430,136,30,6,'#6bd06b');
+
+  R(0,150,W,120,'#b9b3a6');
+  R(0,150,W,6,'#a49d8f');
+  for(var ty=0;ty<5;ty++)for(var tx=0;tx<17;tx++)
+    R(tx*30+(ty%2?15:0)-15,166+ty*16,28,14,'#c4beb0');
+  R(0,236,W,4,'#6b6455');R(0,246,W,4,'#6b6455');
+  for(var rx=0;rx<W;rx+=16)R(rx,234,8,18,'#8a8272');
+  var tramX=((t*40)%620)-90;
+  R(tramX,206,86,30,'#2e7d50');R(tramX,206,86,5,'#256641');
+  R(tramX+4,212,18,12,'#cfeaf5');R(tramX+26,212,18,12,'#cfeaf5');
+  R(tramX+50,212,18,12,'#cfeaf5');R(tramX+70,212,12,14,'#256641');
+  R(tramX+8,200,3,6,'#333');R(tramX+70,200,3,6,'#333');
+  R(tramX+2,234,16,4,'#222');R(tramX+64,234,16,4,'#222');
+  txt('3-5-7',tramX+76,214,'#ffe9a8',7,'center');
+
+  R(40,196,44,6,'#8a5a34');R(40,202,44,4,'#6b4226');R(44,206,5,8,'#4a4a55');R(76,206,5,8,'#4a4a55');
+  R(150,168,4,30,'#4a4a55');R(146,164,12,6,'#ffe9a8');
+  R(400,168,4,30,'#4a4a55');R(396,164,12,6,'#ffe9a8');
+}
+
+/* ---------- 圣基尔达海滩 ---------- */
+function drawBeach(t){
+  sky('#6fb9e8','#cfeaf5');
+  cloud(((t*5)%560)-60,30,1.1);cloud(((t*2.6+240)%560)-60,62,0.8);
+  R(404,26,26,26,'#ffe066');R(408,22,18,34,'#ffe066');R(400,30,34,18,'#ffe066');
+  R(410,32,14,14,'#fff3a8');
+
+  var seaTop=118;
+  var bands=['#2f7fb8','#3890c8','#45a2d6','#5ab2e0','#72c2e8'];
+  R(0,seaTop,W,196-seaTop,'#2f7fb8');
+  for(var i=0;i<bands.length;i++)R(0,seaTop+i*8,W,9,bands[i]);
+  for(var w=0;w<3;w++){
+    var wy=seaTop+6+w*16;
+    for(var x=0;x<W;x+=8){
+      var off=Math.sin(x*0.06+t*(1.6+w*0.5)+w)*3;
+      R(x,wy+off,6,2,'#d8f2ff');
+    }
+  }
+  R(0,196,W,74,'#ecd39a');
+  R(0,196,W,5,'#f5e2b4');
+  for(var sx=0;sx<W;sx+=24)R(sx+((sx/24)%2?8:0),214+((sx*7)%40),3,2,'#d9bd82');
+  for(var x2=0;x2<W;x2+=10){
+    var o2=Math.sin(x2*0.08+t*1.4)*2;
+    R(x2,194+o2,8,3,'#d9c48f');
+  }
+
+  R(300,150,170,10,'#a8794e');
+  R(300,150,170,3,'#c29061');
+  for(var p=0;p<6;p++)R(310+p*28,160,6,32,'#7a5636');
+  R(300,146,170,4,'#c29061');
+  for(var p2=0;p2<7;p2++)R(304+p2*24,138,3,10,'#7a5636');
+  R(300,136,170,3,'#8a5a34');
+
+  var fx=88,fy=126,fr=40;
+  R(fx-4,fy,8,54,'#8a5a34');
+  R(fx-14,fy+50,28,6,'#6b4226');
+  g.strokeStyle='#d94f4f';g.lineWidth=3;
+  g.beginPath();g.arc(fx,fy,fr,0,Math.PI*2);g.stroke();
+  g.strokeStyle='#f0ad4e';g.lineWidth=2;
+  for(var s=0;s<8;s++){
+    var a=t*0.5+s*Math.PI/4;
+    g.beginPath();g.moveTo(fx,fy);
+    g.lineTo(fx+Math.cos(a)*fr,fy+Math.sin(a)*fr);g.stroke();
+    var gx=fx+Math.cos(a)*fr,gy=fy+Math.sin(a)*fr;
+    R(gx-4,gy-2,8,7,['#e05a7a','#5ad0c0','#f0c04a','#a86bd0'][s%4]);
+  }
+  R(fx-4,fy-4,8,8,'#ffe9a8');
+
+  palm(30,194);palm(456,196);
+  R(150,206,4,10,'#e05a7a');R(144,200,16,7,'#f0c04a');
+  R(64,224,14,8,'#e05a7a');R(64,224,14,3,'#fff');
+}
+
+/* ---------- 家园小岛 ---------- */
+function drawIsland(t){
+  sky('#8fd3ef','#dff3fb');
+  cloud(((t*4)%560)-60,24,1);cloud(((t*2.2+260)%560)-60,50,0.7);
+  R(0,96,W,174,'#2f86c0');
+  for(var w=0;w<4;w++){
+    var wy=100+w*16;
+    for(var x=0;x<W;x+=9){
+      var off=Math.sin(x*0.05+t*(1.3+w*0.4))*3;
+      R(x,wy+off,7,2,'#8fd8f5');
+    }
+  }
+  /* 岛体 */
+  R(28,120,424,150,'#ecd39a');
+  R(28,120,424,8,'#f5e2b4');
+  R(40,134,400,132,'#6fbf5f');
+  R(40,134,400,6,'#83d071');
+  for(var gx=0;gx<20;gx++)R(52+gx*20,148+(gx*13%90),3,3,'#5aa94e');
+  /* 环岛浪花 */
+  for(var x3=28;x3<452;x3+=8){
+    var o3=Math.sin(x3*0.08+t*2)*2;
+    R(x3,118+o3,7,3,'#e8f8ff');
+    R(x3,268-o3,7,3,'#e8f8ff');
+  }
+  /* 小森林 */
+  tree(64,168,1.1,'#2f8f4f','#4fb86e');
+  tree(96,176,1,'#277a44','#45a863');
+  tree(44,182,0.9,'#2f8f4f','#4fb86e');
+  tree(84,158,0.85,'#277a44','#45a863');
+  tree(124,166,1,'#2f8f4f','#4fb86e');
+  tree(36,158,0.8,'#277a44','#45a863');
+  /* 小屋 */
+  R(96,148,52,34,'#f7e3c8');
+  R(96,148,52,4,'#e6cba6');
+  R(88,132,68,18,'#e07a5f');
+  R(94,126,56,8,'#c95f45');
+  R(114,160,16,22,'#8a5a34');
+  R(126,170,3,3,'#ffe9a8');
+  R(102,156,12,11,'#8fd0e8');R(107,156,2,11,'#4a5468');
+  R(132,156,12,11,'#8fd0e8');R(137,156,2,11,'#4a5468');
+  R(138,116,8,12,'#c95f45');
+  var puff=Math.floor(t*1.2)%3;
+  R(140,110-puff*5,6,5,'#e8e8f0');R(146,104-puff*6,5,4,'#f4f4fa');
+  /* 小湖泊 */
+  R(280,170,88,46,'#5ec8e0');
+  R(280,170,88,5,'#8fe0f0');
+  R(286,176,76,34,'#78d5ea');
+  for(var lx=0;lx<70;lx+=10){
+    var lo=Math.sin(lx*0.3+t*2)*2;
+    R(288+lx,184+lo,7,2,'#b8f0fa');
+  }
+  R(276,166,96,5,'#e0cf98');
+  R(276,213,96,5,'#e0cf98');
+  /* 湖里的鱼 */
+  for(var i=0;i<G.lake.length;i++){
+    var fid=G.lake[i],fd=null;
+    for(var f=0;f<FISHES.length;f++)if(FISHES[f].id===fid)fd=FISHES[f];
+    var fx2=290+((Math.sin(t*0.8+i*1.7)+1)/2)*64;
+    var fy2=180+((Math.cos(t*0.6+i*2.3)+1)/2)*24;
+    var dirR=Math.cos(t*0.8+i*1.7)>=0;
+    drawMiniFish(fx2,fy2,fd?fd.c:'#e07a5f',dirR);
+  }
+  /* 沙滩小物件 */
+  R(200,250,10,6,'#e07a5f');R(200,250,10,2,'#fff');
+  R(380,236,8,8,'#f0c04a');
+  /* 木牌 */
+  R(196,206,4,16,'#8a5a34');R(182,196,34,14,'#c29061');
+  R(186,200,26,2,'#8a5a34');
+}
+function drawMiniFish(x,y,c,facing){
+  var s=facing?1:-1;
+  R(x-4*s,y-2,8,4,c);
+  R(x-4*s,y-2,8,1,shade(c,40));
+  R(x-8*s,y-3,4,6,shade(c,-40));
+  R(x+2*s,y-2,2,2,'#fff');R(x+3*s,y-2,1,1,'#222');
+}
+
+/* ---------- 小屋内景 ---------- */
+function drawHouse(t){
+  R(0,0,W,H,'#f3e2c8');
+  for(var i=0;i<10;i++)R(0,i*18,W,1,i%2?'#e8d4b4':'#eedcbf');
+  R(0,0,W,64,'#dfeaf2');
+  R(0,60,W,6,'#c2d2de');
+  /* 地板 */
+  R(0,150,W,120,'#c99e6a');
+  for(var fx=0;fx<W;fx+=36)R(fx,150,2,120,'#b58a58');
+  R(0,150,W,4,'#a8794e');
+  /* 地毯 */
+  R(180,196,120,54,'#e07a5f');
+  R(186,202,108,42,'#ec9a84');
+  R(198,212,84,22,'#f7c9b8');
+  /* 窗户（昼夜光） */
+  R(300,74,74,52,'#8a5a34');
+  R(304,78,66,44,'#a8d8f0');
+  R(304,78,66,20,'#cfeaf8');
+  R(336,78,3,44,'#8a5a34');R(304,98,66,3,'#8a5a34');
+  R(40,74,74,52,'#8a5a34');
+  R(44,78,66,44,'#a8d8f0');
+  R(44,78,66,20,'#cfeaf8');
+  R(76,78,3,44,'#8a5a34');R(44,98,66,3,'#8a5a34');
+  /* 床 */
+  R(40,168,96,52,'#f7f3e6');
+  R(40,168,96,8,'#e6e0cf');
+  R(44,176,88,20,'#fffdf4');
+  R(44,196,88,4,'#d94f4f');R(44,204,88,16,'#e05a7a');
+  R(34,166,10,58,'#8a5a34');
+  R(130,166,10,58,'#8a5a34');
+  /* 衣柜 */
+  R(148,150,64,72,'#a8794e');
+  R(152,154,56,64,'#c29061');
+  R(179,154,3,64,'#8a5a34');
+  R(172,184,5,5,'#ffe9a8');R(184,184,5,5,'#ffe9a8');
+  txt('CLOSET',180,158,'#7a5636',7,'center');
+  /* 书桌+鱼缸 */
+  R(300,170,80,10,'#a8794e');
+  R(304,180,8,32,'#8a5a34');R(368,180,8,32,'#8a5a34');
+  R(316,138,50,32,'#bfe8f5');
+  R(316,138,50,4,'#8fd0e8');
+  R(320,142,42,24,'#78d5ea');
+  var fcount=Math.min(4,G.lake.length);
+  for(var i=0;i<fcount;i++){
+    var fd=null;
+    for(var f=0;f<FISHES.length;f++)if(FISHES[f].id===G.lake[i])fd=FISHES[f];
+    var fx2=324+((Math.sin(t+i*2)+1)/2)*32,fy2=148+((Math.cos(t*0.8+i)+1)/2)*12;
+    drawMiniFish(fx2,fy2,fd?fd.c:'#e07a5f',Math.cos(t+i*2)>=0);
+  }
+  /* 小床/地毯角（小金鱼的位置） */
+  R(416,196,44,40,'#f0c04a');
+  R(420,200,36,32,'#ffe9a8');
+  /* 门垫 */
+  R(216,246,48,12,'#6fbf5f');
+  txt('出口',240,248,'#2e5c1e',8,'center');
+}
+/* ================= 钓鱼小游戏 ================= */
+var fish={on:false,phase:0,wait:0,zone:0.3,zoneT:0,cur:0.5,vel:0,prog:0,got:null};
+function startFishing(){
+  if(fish.on)return;
+  fish.on=true;fish.phase=0;fish.wait=rnd(1,2.4);fish.prog=0;fish.cur=0.5;fish.vel=0;
+  fish.zone=rnd(0.15,0.6);fish.zoneT=0;
+  show('fishUI');
+  $('fSt').textContent='抛竿…等待鱼儿咬钩';
+  $('fSp').textContent='稳住，等“！”出现再按住 空格 收线';
+  $('fZone').style.left=(fish.zone*100)+'%';
+  $('fZone').style.width='26%';
+}
+function closeFishing(){fish.on=false;hide('fishUI')}
+function updateFishing(dt){
+  if(!fish.on)return;
+  if(fish.phase===0){
+    fish.wait-=dt;
+    $('fSt').textContent='浮漂轻轻晃动…';
+    if(fish.wait<=0){
+      fish.phase=1;fish.got=pickFish();
+      $('fSt').textContent='！！鱼上钩了！';
+      $('fSp').textContent='按住 空格 收线，让游标停在绿色区域！';
+      setTimeout(function(){if(fish.on&&fish.phase===1)fish.phase=2,fish.hold=0;},600);
+    }
+    return;
+  }
+  if(fish.phase===1)return;
+  if(fish.phase===2){
+    fish.zoneT-=dt;
+    if(fish.zoneT<=0){fish.zone=rnd(0.05,0.65);fish.zoneT=rnd(0.7,1.4);
+      $('fZone').style.left=(fish.zone*100)+'%';}
+    var hold=keys.Space;
+    fish.vel+=(hold?-1.9:1.5)*dt;
+    fish.vel*=0.94;
+    fish.cur=clamp(fish.cur+fish.vel*dt,0,1);
+    var inZ=fish.cur>=fish.zone&&fish.cur<=fish.zone+0.26;
+    fish.prog=clamp(fish.prog+(inZ?0.42:-0.3)*dt,0,1);
+    $('fCur').style.left=(fish.cur*100)+'%';
+    $('fSt').textContent=inZ?'收线中…':'鱼要跑了！';
+    $('fSp').textContent='进度 '+Math.round(fish.prog*100)+'%　'+(inZ?'▲ 稳住':'▼ 快跟上');
+    if(fish.prog>=1){
+      fish.phase=3;
+      addFish(fish.got.id);
+      $('fSt').textContent='钓到了 '+fish.got.n+'！';
+      $('fSp').textContent='太棒了！自动收竿～';
+      setTimeout(closeFishing,1400);
+    }else if(fish.prog<=0){
+      fish.phase=3;
+      $('fSt').textContent='鱼跑了…';
+      $('fSp').textContent='别灰心，再抛一竿！';
+      setTimeout(closeFishing,1200);
+    }
+  }
+}
+function pickFish(){
+  var pool=[];
+  for(var i=0;i<FISHES.length;i++){
+    var w=FISHES[i].rare===0?30:FISHES[i].rare===1?14:FISHES[i].rare===2?6:2;
+    for(var k=0;k<w;k++)pool.push(FISHES[i]);
+  }
+  return pool[irnd(0,pool.length-1)];
+}
+
+/* ================= 湖泊管理 ================= */
+function openLake(){
+  show('panel');$('pTitle').textContent='小湖泊 · 水族箱';
+  $('pTabs').innerHTML='';
+  var body=$('panelBody'),html='<div class="grid">';
+  html+='<div class="item" style="grid-column:1/-1"><b>湖里 '+G.lake.length+' 只</b>把图鉴里钓到的鱼放进来，它们会在湖里游来游去。</div>';
+  var have={};
+  for(var i=0;i<G.lake.length;i++)have[G.lake[i]]=(have[G.lake[i]]||0)+1;
+  for(var f=0;f<FISHES.length;f++){
+    var fd=FISHES[f],n=G.fish[fd.id]||0,inLake=have[fd.id]||0;
+    if(n<=0){html+='<div class="item lock"><b>'+fd.n+'</b><span class="no">还没钓到</span></div>';continue;}
+    html+='<div class="item"><b style="color:'+fd.c+'">'+fd.n+'</b>图鉴 '+n+' 条 · 湖中 '+inLake+' 条<br>';
+    if(inLake>0)html+='<span class="btn" style="display:inline-block;margin-top:3px;font-size:10px;padding:1px 6px" data-lakeout="'+fd.id+'">捞回 1 条</span> ';
+    if(n>inLake)html+='<span class="btn" style="display:inline-block;margin-top:3px;font-size:10px;padding:1px 6px;background:#2e6b4f" data-lakein="'+fd.id+'">放入 1 条</span>';
+    html+='</div>';
+  }
+  html+='</div>';
+  body.innerHTML=html;
+  var ins=body.querySelectorAll('[data-lakein]');
+  for(var a=0;a<ins.length;a++)ins[a].onclick=function(){
+    var id=this.getAttribute('data-lakein');
+    if(!G.lake.length&&id){/*ok*/}
+    var haveN=0;for(var i=0;i<G.lake.length;i++)if(G.lake[i]===id)haveN++;
+    if(haveN<(G.fish[id]||0)){G.lake.push(id);toast('放了一条进湖里～');saveGame();openLake();}
+  };
+  var outs=body.querySelectorAll('[data-lakeout]');
+  for(var b=0;b<outs.length;b++)outs[b].onclick=function(){
+    var id=this.getAttribute('data-lakeout');
+    for(var i=0;i<G.lake.length;i++){if(G.lake[i]===id){G.lake.splice(i,1);break;}}
+    toast('捞回了 1 条');saveGame();openLake();
+  };
+}
+
+/* ================= 图鉴 ================= */
+var bookTab=0;
+function openBook(){
+  show('panel');$('pTitle').textContent='旅行图鉴';
+  $('pTabs').innerHTML='<span class="tab'+(bookTab===0?' on':'')+'" data-t="0">纪念品</span>'+
+                       '<span class="tab'+(bookTab===1?' on':'')+'" data-t="1">鱼类图鉴</span>';
+  var tabs=$('pTabs').querySelectorAll('.tab');
+  for(var i=0;i<tabs.length;i++)tabs[i].onclick=function(){bookTab=+this.getAttribute('data-t');openBook();};
+  var body=$('panelBody'),html='';
+  if(bookTab===0){
+    var got=0;for(var k in G.items)if(G.items[k])got++;
+    html+='<div class="item" style="grid-column:1/-1"><b>墨尔本纪念品 '+got+' / '+ITEMS.length+'</b>在场景里找到它们！</div><div class="grid">';
+    for(var i2=0;i2<ITEMS.length;i2++){
+      var it=ITEMS[i2],has=G.items[it.id];
+      html+='<div class="item'+(has?'':' lock')+'"><b>'+(has?it.n:'？？？')+'</b>'+
+        (has?it.d:'<span class="no">'+(it.s==='station'?'火车站':'海滩')+'未找到</span>')+'</div>';
+    }
+    html+='</div>';
+  }else{
+    var gf=0;for(var k2 in G.fish)if(G.fish[k2])gf++;
+    html+='<div class="item" style="grid-column:1/-1"><b>鱼类 '+gf+' / '+FISHES.length+'</b>在圣基尔达海滩抛竿钓鱼！</div><div class="grid">';
+    for(var i3=0;i3<FISHES.length;i3++){
+      var fd=FISHES[i3],n=G.fish[fd.id]||0;
+      html+='<div class="item'+(n?'':' lock')+'"><b style="color:'+(n?fd.c:'')+'">'+(n?fd.n:'？？？')+'</b>'+
+        (n?'钓获 '+n+' 次 · 湖中 '+countLake(fd.id)+' 条':'<span class="no">尚未发现</span>')+'</div>';
+    }
+    html+='</div>';
+  }
+  body.innerHTML=html;
+}
+function countLake(id){var c=0;for(var i=0;i<G.lake.length;i++)if(G.lake[i]===id)c++;return c;}
+
+/* ================= 澳洲地图 ================= */
+var MAP_STATES=[
+  {n:'西澳大利亚州',n2:'WESTERN AUSTRALIA',c:'#4a90d9',x:56,y:150,w:120,h:110},
+  {n:'北领地',n2:'NORTHERN TERRITORY',c:'#8fa8d8',x:176,y:70,w:70,h:80},
+  {n:'南澳州',n2:'SOUTH AUSTRALIA',c:'#f0a44a',x:176,y:150,w:70,h:110},
+  {n:'昆士兰州',n2:'QUEENSLAND',c:'#9cc96b',x:246,y:70,w:110,h:80},
+  {n:'新南威尔士州',n2:'NEW SOUTH WALES',c:'#ef7a5a',x:246,y:150,w:110,h:64},
+  {n:'维多利亚州',n2:'VICTORIA',c:'#5ac8d8',x:246,y:214,w:80,h:30},
+  {n:'塔斯马尼亚',n2:'TASMANIA',c:'#7cc15e',x:300,y:250,w:34,h:18}
+];
+var MAP_CITIES=[
+  {n:'墨尔本',x:306,y:230,open:true},
+  {n:'悉尼',x:344,y:190},{n:'布里斯本',x:340,y:140},{n:'珀斯',x:80,y:214},
+  {n:'达尔文',x:214,y:84},{n:'阿德莱德',x:222,y:214},{n:'霍巴特',x:316,y:262},
+  {n:'凯恩斯',x:330,y:92},{n:'爱丽斯泉',x:212,y:158}
+];
+var mapAnim=0;
+function openMap(){
+  G.mode='map';closeAllPanels();hide('hint','creator','titleScr');$('dlg').classList.add('hidden');
+  dialog.active=false;
+  updateHud();
+}
+function drawMap(t){
+  R(0,0,W,H,'#63c7d8');
+  for(var i=0;i<5;i++)for(var x=0;x<W;x+=10){
+    var o=Math.sin(x*0.05+t*1.2+i)*2;
+    R(x,40+i*46+o,7,2,'#8ae0ea');
+  }
+  /* 大陆轮廓 */
+  g.fillStyle='#3a7ac0';
+  g.strokeStyle='#1e4f8a';g.lineWidth=3;
+  g.beginPath();
+  var pts=[[46,140],[60,110],[90,96],[130,80],[170,58],[210,52],[246,58],[250,74],[286,58],[330,52],[356,74],[368,110],[372,150],[366,190],[350,224],[330,244],[318,268],[300,276],[286,258],[268,244],[240,246],[210,250],[180,252],[150,244],[118,250],[86,244],[58,222],[44,190],[40,164]];
+  g.moveTo(pts[0][0],pts[0][1]);
+  for(var p=1;p<pts.length;p++)g.lineTo(pts[p][0],pts[p][1]);
+  g.closePath();g.fill();g.stroke();
+  /* 州色块（近似） */
+  for(var s=0;s<MAP_STATES.length;s++){
+    var st=MAP_STATES[s];
+    g.save();g.globalAlpha=0.82;g.fillStyle=st.c;
+    g.fillRect(st.x,st.y,st.w,st.h);g.restore();
+  }
+  /* 重描海岸 */
+  g.strokeStyle='#1e4f8a';g.lineWidth=2.5;
+  g.beginPath();g.moveTo(pts[0][0],pts[0][1]);
+  for(var p2=1;p2<pts.length;p2++)g.lineTo(pts[p2][0],pts[p2][1]);
+  g.closePath();g.stroke();
+  /* 州名 */
+  for(var s2=0;s2<MAP_STATES.length;s2++){
+    var st2=MAP_STATES[s2];
+    if(st2.w<70||st2.h<60)continue;
+    txt(st2.n,st2.x+st2.w/2,st2.y+st2.h/2-8,'#123a5e',7,'center');
+    txt(st2.n2,st2.x+st2.w/2,st2.y+st2.h/2+1,'#1a4d78',6,'center');
+  }
+  /* 维多利亚（小州，标签放左侧） */
+  txt('维多利亚州 VICTORIA',248,236,'#0d2c4a',6,'left');
+  /* 城市 */
+  var pulse=(Math.sin(t*4)+1)/2;
+  for(var c=0;c<MAP_CITIES.length;c++){
+    var ct=MAP_CITIES[c];
+    if(ct.open){
+      R(ct.x-3,ct.y-3,7,7,'#e8384f');
+      g.strokeStyle='rgba(255,240,160,'+(0.4+pulse*0.6)+')';g.lineWidth=2;
+      g.beginPath();g.arc(ct.x,ct.y,7+pulse*5,0,Math.PI*2);g.stroke();
+      R(ct.x-46,ct.y-34,92,14,'rgba(10,20,40,.7)');
+      txt('▼ '+ct.n+' 已开放',ct.x,ct.y-32,'#fff3a8',9,'center');
+    }else{
+      R(ct.x-2,ct.y-2,5,5,'#5a6478');
+      var lw=ct.n.length*8+14,ly=(ct.y>244)?ct.y-15:ct.y;
+      var lx=(ct.x>300&&ct.y<244)?ct.x+4:ct.x-lw/2;
+      R(lx,ly,lw,13,'rgba(10,20,40,.6)');
+      txt('🔒'+ct.n,lx+lw/2,ly+2,'#9fb0c8',7,'center');
+    }
+  }
+  /* 标题与提示 */
+  R(0,0,W,20,'rgba(10,20,40,.72)');
+  txt('澳大利亚 · AUSTRALIA',10,6,'#ffe9a8',9);
+  txt('墨尔本（已开放）· 其他区域待解锁',W-10,6,'#cfe8f5',8,'right');
+  /* 家园小岛入口 */
+  var hx=418,hy=236;
+  R(hx-26,hy-16,52,34,'#ecd39a');R(hx-22,hy-10,44,24,'#6fbf5f');
+  tree(hx-8,hy-2,0.5,'#2f8f4f','#4fb86e');
+  R(hx+6,hy-8,10,9,'#f7e3c8');R(hx+4,hy-12,14,5,'#e07a5f');
+  g.strokeStyle=(Math.sin(t*4)+1)/2?'#ffe9a8':'#7ee0b0';g.lineWidth=2;
+  g.strokeRect(hx-27,hy-17,54,36);
+  txt('家园小岛',hx,hy+20,'#fff3a8',8,'center');
+}
+function mapClick(mx,my){
+  /* 家园小岛 */
+  if(mx>391&&mx<445&&my>217&&my<256){enterScene('island',240,240);return;}
+  for(var c=0;c<MAP_CITIES.length;c++){
+    var ct=MAP_CITIES[c];
+    if(dist(mx,my,ct.x,ct.y)<14){
+      if(ct.open){openCards();}
+      else toast(ct.n+'：该区域尚未解锁，敬请期待！');
+      return;
+    }
+  }
+}
+function openCards(){
+  show('cards');
+  $('cardRow').innerHTML=
+    '<div class="sc" data-s="station"><div class="ic">🚉</div><div class="t">弗林德斯街火车站</div><div class="d">黄墙绿顶大钟楼<br>电车叮叮驶过</div></div>'+
+    '<div class="sc" data-s="beach"><div class="ic">🏖️</div><div class="t">圣基尔达海滩</div><div class="d">海浪·摩天轮·栈桥<br>还能钓鱼</div></div>'+
+    '<div class="sc" data-s="island"><div class="ic">🏝️</div><div class="t">家园小岛</div><div class="d">小森林·浅湖泊<br>和你的小屋</div></div>';
+  var scs=$('cardRow').querySelectorAll('.sc');
+  for(var i=0;i<scs.length;i++)scs[i].onclick=function(){
+    var id=this.getAttribute('data-s');
+    if(id==='station')enterScene('station',240,220);
+    else if(id==='beach')enterScene('beach',240,240);
+    else enterScene('island',240,240);
+  };
+}
+/* ================= 开场动画 ================= */
+var intro={t:0,done:false,skipped:false};
+var INTRO_LEN=17;
+function startIntro(){
+  G.mode='intro';intro.t=0;intro.done=false;
+  hide('titleScr','hud','creator');
+}
+function skipIntro(){ if(intro.t<INTRO_LEN-1.5){intro.t=INTRO_LEN-1.5;} }
+function drawIntro(t){
+  R(0,0,W,H,'#05060f');
+  if(t<4.2){
+    /* 星空 */
+    for(var i=0;i<60;i++){
+      var sx=(i*97)%W,sy=(i*53)%H;
+      var tw=(Math.sin(t*3+i)+1)/2;
+      R(sx,sy,1,1,tw>0.4?'#cfe8f5':'#5a6a8a');
+    }
+    txt('墨尔本',W/2,96+Math.sin(t*1.4)*3,'#ffe9a8',26,'center');
+    txt('我来了。',W/2,132,'#9fd7ff',16,'center');
+    g.save();g.translate(W/2,186);
+    g.font='bold 10px "Courier New",monospace';g.textAlign='center';g.fillStyle='#7d8aad';
+    g.fillText('— 注意宁的澳大利亚之旅 —',0,0);g.restore();
+  }else if(t<9){
+    var t2=t-4.2;
+    /* 飞机穿云 */
+    sky2('#0a1030','#1c2a5c');
+    for(var s=0;s<50;s++){
+      var sx2=(s*89)%W,sy2=(s*61)%H;
+      R(sx2,sy2,1,1,(Math.sin(t2*4+s)+1)/2?'#e8ecff':'#5a6a9a');
+    }
+    cloud2(((t2*160)%600)-80,60,1.4,'#2a3a6c');
+    cloud2(((t2*110+300)%600)-80,150,1.8,'#243260');
+    cloud2(((t2*200+140)%600)-80,110,1,'#304078');
+    var px=-60+t2*120,py=118+Math.sin(t2*1.6)*6;
+    drawPlane(px,py);
+    txt('CN → MEL',px,py-34,'#ffe9a8',9,'center');
+    if(t2>1)typeLine2('跨越 8,000 公里的夜色，舷窗外的星星一颗颗熄灭。',t2-1,W/2,214,'#cfe8f5',11);
+    if(t2>3)typeLine2('下一站：南半球。',t2-3,W/2,236,'#ffe9a8',13);
+  }else if(t<13.4){
+    var t3=t-9;
+    R(0,0,W,H,'#63c7d8');
+    for(var q=0;q<5;q++)for(var x=0;x<W;x+=10)
+      R(x,50+q*44+Math.sin(x*0.05+t3*1.5)*2,7,2,'#8ae0ea');
+    drawAusSil();
+    /* 航线 */
+    var fx0=250,fy0=40,fx1=306,fy1=230;
+    var pr=clamp(t3/2.6,0,1);
+    g.strokeStyle='#fff3a8';g.lineWidth=2;g.setLineDash([5,5]);
+    g.beginPath();g.moveTo(fx0,fy0);
+    g.lineTo(fx0+(fx1-fx0)*pr,fy0+(fy1-fy0)*pr);g.stroke();
+    g.setLineDash([]);
+    var ax=fx0+(fx1-fx0)*pr,ay=fy0+(fy1-fy0)*pr;
+    R(ax-3,ay-3,7,7,'#e8384f');
+    txt('✈',ax,ay-16,'#fff',12,'center');
+    if(pr>=1){
+      var pulse=(Math.sin(t3*6)+1)/2;
+      g.strokeStyle='rgba(255,240,160,'+(0.4+pulse*0.6)+')';g.lineWidth=2;
+      g.beginPath();g.arc(306,230,7+pulse*6,0,Math.PI*2);g.stroke();
+    }
+    txt('MELBOURNE 墨尔本',306,248,'#fff3a8',9,'center');
+    if(t3>1.2)typeLine2('降落在维多利亚州。',t3-1.2,W/2,26,'#123a5e',12);
+  }else if(t<16.2){
+    /* 跑道降落 */
+    var t4=t-13.4;
+    R(0,0,W,H,'#101830');
+    for(var m=0;m<40;m++)R((m*67)%W,(m*41)%120,1,1,'#8fa8d8');
+    R(0,150,W,120,'#2a3350');
+    R(0,150,W,4,'#3c4870');
+    for(var rl=0;rl<12;rl++){
+      var blink=(Math.sin(t4*6-rl*0.6)+1)/2;
+      R(14+rl*40,206,10,4,blink>0.4?'#ffe9a8':'#6b5a2a');
+      R(14+rl*40,240,10,4,blink>0.4?'#ffe9a8':'#6b5a2a');
+    }
+    var lxp=430-t4*150;
+    drawPlane(lxp,176);
+    txt('到达 · MELBOURNE',W/2,64,'#ffe9a8',18,'center');
+    txt('10:03 落地 · 天气晴 · 欢迎来到墨尔本',W/2,92,'#9fd7ff',9,'center');
+    if(t4>1.4)typeLine2('系好安全带，冒险开始。',t4-1.4,W/2,120,'#dfffe9',12);
+  }else{
+    /* 收尾 */
+    var t5=t-(INTRO_LEN-0.8);
+    R(0,0,W,H,'#05060f');
+    txt('注意宁的澳大利亚之旅',W/2,110,'#ffe9a8',18,'center');
+    txt('第一章 · 墨尔本',W/2,140,'#9fd7ff',11,'center');
+    if(t>=INTRO_LEN){finishIntro();}
+  }
+}
+function sky2(a,b){
+  for(var i=0;i<14;i++){
+    var tt=i/13;
+    var c1=parseInt(a.slice(1),16),c2=parseInt(b.slice(1),16);
+    var r=Math.round(((c1>>16)&255)+(((c2>>16)&255)-((c1>>16)&255))*tt);
+    var gg=Math.round(((c1>>8)&255)+(((c2>>8)&255)-((c1>>8)&255))*tt);
+    var bb=Math.round((c1&255)+((c2&255)-(c1&255))*tt);
+    R(0,i*20,W,21,'rgb('+r+','+gg+','+bb+')');
+  }
+}
+function cloud2(x,y,s,c){
+  R(x,y+4,26*s,7*s,c);R(x+5,y,14*s,6*s,c);R(x+16,y+6,12*s,5*s,shade(c,14));
+}
+function drawPlane(x,y){
+  R(x-26,y-4,52,9,'#e8ecf5');
+  R(x-26,y-4,52,3,'#c2ccdd');
+  R(x+20,y-7,10,6,'#e8ecf5');
+  R(x-4,y-14,16,11,'#c2ccdd');
+  R(x-8,y+5,10,7,'#c2ccdd');
+  R(x-24,y-2,5,3,'#8fd0e8');R(x-17,y-2,5,3,'#8fd0e8');R(x-10,y-2,5,3,'#8fd0e8');
+  R(x-1,y-2,5,3,'#8fd0e8');
+  R(x-26,y+3,6,3,'#d94f4f');
+}
+function drawAusSil(){
+  g.fillStyle='#4a90d9';g.strokeStyle='#1e4f8a';g.lineWidth=3;
+  g.beginPath();
+  var pts=[[46,140],[60,110],[90,96],[130,80],[170,58],[210,52],[246,58],[250,74],[286,58],[330,52],[356,74],[368,110],[372,150],[366,190],[350,224],[330,244],[318,268],[300,276],[286,258],[268,244],[240,246],[210,250],[180,252],[150,244],[118,250],[86,244],[58,222],[44,190],[40,164]];
+  g.moveTo(pts[0][0],pts[0][1]);
+  for(var p=1;p<pts.length;p++)g.lineTo(pts[p][0],pts[p][1]);
+  g.closePath();g.fill();g.stroke();
+}
+function typeLine2(s,el,x,y,color,size){
+  if(el<=0)return;
+  var dur=1.2;
+  var n=Math.min(s.length,Math.ceil(s.length*clamp(el/dur,0,1)));
+  g.font='bold '+size+'px "Microsoft YaHei",sans-serif';
+  g.fillStyle=color;g.textAlign='center';g.textBaseline='top';
+  g.fillText(s.slice(0,n),x,y);
+}
+function finishIntro(){
+  if(intro.done)return;
+  intro.done=true;
+  openCreator(false);
+}
+
+/* ================= 角色创建 ================= */
+var OPTS=[
+  {k:'hair',n:'头发',list:HAIRS},
+  {k:'skin',n:'肤色',list:SKINC,color:true},
+  {k:'eye', n:'眼睛',list:EYEC,color:true},
+  {k:'top', n:'上衣',list:TOPS},
+  {k:'bot', n:'裤子/裙',list:BOTS},
+  {k:'shoe',n:'鞋子',list:SHOES}
+];
+var COLOR_OPTS=[
+  {k:'hairC',n:'发色',list:HAIRC},
+  {k:'topC', n:'衣色',list:TOPC},
+  {k:'botC', n:'裤色',list:BOTC},
+  {k:'shoeC',n:'鞋色',list:SHOEC}
+];
+var creatorBack=false,pvFrame=0,pvT=0,creatorPos=null;
+function openCreator(isBack){
+  creatorBack=!!isBack;
+  creatorPos=isBack?{s:G.scene,x:player.x,y:player.y}:null;
+  G.mode='creator';
+  hide('titleScr','hud','panel','cards','dlg','hint');
+  show('creator');
+  $('btnCreBack').classList.toggle('hidden',!isBack);
+  $('btnStart').textContent=isBack?'保存返回':'出发！';
+  $('inName').value=G.name;
+  $('pvName').textContent=G.name;
+  buildOptRows();
+}
+function buildOptRows(){
+  var html='';
+  function row(label,list,k,colors){
+    var h='<div class="row"><span class="lb">'+label+'</span>'+
+      '<span class="chip" data-k="'+k+'" data-d="-1">◀</span>'+
+      '<span class="val" id="v_'+k+'"></span>'+
+      '<span class="chip" data-k="'+k+'" data-d="1">▶</span>';
+    if(colors)h+='<span class="lb" style="width:auto;margin-left:8px">色</span>'+swatches(colors);
+    h+='</div>';
+    return h;
+  }
+  for(var i=0;i<OPTS.length;i++){
+    var o=OPTS[i];
+    html+=row(o.n,o.list,o.k,(o.k==='skin'||o.k==='eye')?{k:o.k,list:(o.k==='skin')?SKINC:EYEC}:null);
+  }
+  html+='<div class="row" style="flex-wrap:wrap"><span class="lb" style="width:100%;margin-bottom:3px">配色</span>';
+  for(var c=0;c<COLOR_OPTS.length;c++){
+    var co=COLOR_OPTS[c];
+    html+='<span class="lb" style="width:44px;font-size:11px">'+co.n+'</span>'+swatches(co);
+  }
+  html+='</div>';
+  $('optRows').innerHTML=html;
+  var chips=$('optRows').querySelectorAll('.chip');
+  for(var ci=0;ci<chips.length;ci++)chips[ci].onclick=function(){
+    var k=this.getAttribute('data-k'),d=+this.getAttribute('data-d');
+    stepOpt(k,d);
+  };
+  var sws=$('optRows').querySelectorAll('.sw');
+  for(var si=0;si<sws.length;si++)sws[si].onclick=function(){
+    var k=this.getAttribute('data-k'),v=+this.getAttribute('data-v');
+    G.look[k]=v;syncOpt();
+  };
+  syncOpt();
+}
+function swatches(co){
+  var h='';
+  for(var i=0;i<co.list.length;i++)
+    h+='<span class="sw" data-k="'+co.k+'" data-v="'+i+'" style="background:'+co.list[i]+'"></span>';
+  return h;
+}
+function stepOpt(k,d){
+  var len=null;
+  for(var i=0;i<OPTS.length;i++)if(OPTS[i].k===k)len=OPTS[i].list.length;
+  for(var j=0;j<COLOR_OPTS.length;j++)if(COLOR_OPTS[j].k===k)len=COLOR_OPTS[j].list.length;
+  if(!len)return;
+  G.look[k]=((G.look[k]||0)+d+len)%len;
+  syncOpt();
+}
+function syncOpt(){
+  for(var i=0;i<OPTS.length;i++){
+    var o=OPTS[i],el=$('v_'+o.k);
+    var idx=(G.look[o.k]||0),nm=o.list[idx];
+    if(typeof nm==='string'&&nm.charAt(0)==='#')nm='色 '+(idx+1);
+    if(el)el.textContent=(idx+1)+'/'+o.list.length+' '+nm;
+  }
+  var sws=$('optRows').querySelectorAll('.sw');
+  for(var s=0;s<sws.length;s++){
+    var k=sws[s].getAttribute('data-k'),v=+sws[s].getAttribute('data-v');
+    sws[s].classList.toggle('on',G.look[k]===v);
+  }
+}
+function randomLook(){
+  G.look={
+    hair:irnd(0,HAIRS.length-1),hairC:irnd(0,HAIRC.length-1),
+    skin:irnd(0,SKINC.length-1),eye:irnd(0,EYEC.length-1),
+    top:irnd(0,TOPS.length-1),topC:irnd(0,TOPC.length-1),
+    bot:irnd(0,BOTS.length-1),botC:irnd(0,BOTC.length-1),
+    shoe:irnd(0,SHOES.length-1),shoeC:irnd(0,SHOEC.length-1)
+  };
+  syncOpt();
+}
+$('btnNew').onclick=function(){G.items={};G.fish={};G.lake=[];G.goldHome=false;startIntro();};
+$('btnCont').onclick=function(){
+  if(loadGame()){enterScene(G.scene||'station');toast('欢迎回来，'+G.name+'！');}
+  else toast('还没有存档哦');
+};
+$('btnRandom').onclick=randomLook;
+$('btnStart').onclick=function(){
+  G.name=$('inName').value.trim()||'宁';
+  if(creatorBack){saveGame();backFromCreator('新造型完成！');}
+  else{saveGame();openMap();toast('欢迎来到澳大利亚，'+G.name+'！');}
+};
+$('btnCreBack').onclick=function(){saveGame();backFromCreator();};
+function backFromCreator(msg){
+  var p=creatorPos;
+  if(p)enterScene(p.s,p.x,p.y);
+  else enterScene('house');
+  if(msg)toast(msg);
+}
+$('inName').oninput=function(){$('pvName').textContent=this.value||'宁';};
+/* ================= HUD 按钮 ================= */
+$('bMap').onclick=function(){openMap()};
+$('bScene').onclick=function(){ if(G.mode==='play')openCards(); };
+$('bBook').onclick=function(){openBook()};
+$('bCloth').onclick=function(){openCreator(true)};
+$('bFish').onclick=function(){toggleGoldfish()};
+cv.addEventListener('click',function(e){
+  var r=cv.getBoundingClientRect();
+  var mx=(e.clientX-r.left)/r.width*W,my=(e.clientY-r.top)/r.height*H;
+  if(G.mode==='map')mapClick(mx,my);
+});
+
+/* ================= 预览绘制 ================= */
+var pvCvs=$('pv'),pvG=pvCvs.getContext('2d');
+function drawPreview(){
+  pvG.imageSmoothingEnabled=false;
+  pvG.fillStyle='#10142c';pvG.fillRect(0,0,pvCvs.width,pvCvs.height);
+  pvG.fillStyle='#1a2144';
+  for(var i=0;i<4;i++)pvG.fillRect(0,110+i*8,pvCvs.width,4);
+  var sv=g;g=pvG;
+  drawChar(pvG,45,118,G.look,'down',pvFrame,3);
+  g=sv;
+}
+
+/* ================= 主循环 ================= */
+var last=0,tGlobal=0;
+function loop(ts){
+  var dt=Math.min(0.05,(ts-last)/1000||0);last=ts;
+  tGlobal+=dt;
+  update(dt);
+  render(tGlobal);
+  requestAnimationFrame(loop);
+}
+function update(dt){
+  if(toastT>0){toastT-=dt;if(toastT<=0)$('toast').classList.remove('show');}
+  if(G.mode==='intro'){intro.t+=dt;return;}
+  if(G.mode==='creator'){pvT+=dt;if(pvT>0.28){pvT=0;pvFrame=(pvFrame+1)%4;}drawPreview();return;}
+  if(G.mode==='play'){
+    if(!dialog.active&&!panelOpen()&&!cardsOpen()&&!fish.on){
+      movePlayer(dt);updateGold(dt);
+    }
+    updateFishing(dt);
+    if(dialog.active){
+      var full=dialog.lines[dialog.idx]||'';
+      if(dialog.lineShown<full.length){
+        dialog.timer+=dt;
+        var target=Math.min(full.length,Math.floor(dialog.timer*28));
+        if(target>dialog.lineShown){dialog.lineShown=target;renderDialog();}
+      }
+    }
+    updateHint();
+  }
+}
+function render(t){
+  g.clearRect(0,0,W,H);
+  if(G.mode==='title'){
+    drawTitleBg(t);return;
+  }
+  if(G.mode==='intro'){drawIntro(intro.t);return;}
+  if(G.mode==='creator'){drawTitleBg(t);return;}
+  if(G.mode==='map'){drawMap(t);return;}
+  if(G.mode==='play'){drawPlay(t);return;}
+}
+function drawTitleBg(t){
+  sky('#1c2a5c','#3a2a5c');
+  for(var i=0;i<70;i++){
+    var sx=(i*97)%W,sy=(i*53)%(H-40);
+    R(sx,sy,1,1,(Math.sin(t*2.5+i)+1)/2?'#e8ecff':'#5a6a9a');
+  }
+  R(0,196,W,74,'#1a3a5c');
+  for(var x=0;x<W;x+=9){
+    var o=Math.sin(x*0.05+t*1.6)*3;
+    R(x,196+o,7,2,'#2f6a9c');
+  }
+  /* 远景墨尔本天际线 */
+  var sk=['#232a4a','#1e2440','#283054'];
+  for(var b=0;b<10;b++){
+    var bw=40,bh=30+((b*47)%70),bx=b*50-8;
+    R(bx,196-bh,bw,bh,sk[b%3]);
+    for(var wy=0;wy<bh-8;wy+=10)for(var wx=0;wx<bw-8;wx+=10)
+      if((b+wy+wx)%3)R(bx+4+wx,196-bh+5+wy,4,4,'rgba(255,233,168,.6)');
+  }
+  cloud(((t*7)%560)-60,36,1);cloud(((t*4+220)%560)-60,64,0.7);
+  drawPlane(((t*36)%600)-70,120+Math.sin(t*1.2)*5);
+}
+function drawPlay(t){
+  var scene=G.scene;
+  if(scene==='station')drawStation(t);
+  else if(scene==='beach')drawBeach(t);
+  else if(scene==='island')drawIsland(t);
+  else if(scene==='house')drawHouse(t);
+
+  /* 场景内物件互动提示点 */
+  var ents=[];
+  if(scene==='station'||scene==='beach'){
+    /* NPC 已包含在 interactives 里，用 look 信息单独记录绘制 */
+  }
+  /* 绘制 NPC（从 NPC_LOOKS 需位置）— 用 npcDrawList */
+  for(var i=0;i<npcDraw.length;i++)ents.push(npcDraw[i]);
+  if(gold.visible)ents.push({x:gold.x,y:gold.y,kind:'gold'});
+  ents.push({x:player.x,y:player.y,kind:'player'});
+  ents.sort(function(a,b){return a.y-b.y;});
+  for(var e=0;e<ents.length;e++){
+    var en=ents[e];
+    if(en.kind==='player')drawChar(g,en.x,en.y,G.look,player.dir,player.frame,1);
+    else if(en.kind==='gold')drawChar(g,en.x,en.y,goldLook(),gold.dir,gold.frame,1);
+    else if(en.look){
+      drawChar(g,en.x,en.y,en.look,en.dir||'down',en.frame||0,1);
+      if(dist(player.x,player.y,en.x,en.y)<40)txt(en.name,en.x,en.y-34,'#dfffe9',7,'center');
+    }
+  }
+
+  /* 黑边字幕（场景名） */
+  if(sceneT<2.4){
+    var a=sceneT<0.4?sceneT/0.4:(sceneT>1.8?(2.4-scTSafe())/0.6:1);
+    R(0,100,W,26,'rgba(8,12,28,'+(0.7*a)+')');
+    txt(SCENES[scene].name,W/2,106,'rgba(255,233,168,'+a+')',13,'center');
+  }
+}
+function scTSafe(){return sceneT;}
+var sceneT=0,npcDraw=[];
+function refreshNpcs(){
+  npcDraw=[];
+  var src=[];
+  if(G.scene==='station')src=[
+    {n:'电车司机老杰克',x:370,y:236,k:'jack',dir:'left'},
+    {n:'街头画家小夏',x:430,y:196,k:'xia',dir:'down'},
+    {n:'卖报的老爷爷',x:70,y:206,k:'gr',dir:'right'}];
+  if(G.scene==='beach')src=[
+    {n:'冲浪少年阿海',x:300,y:240,k:'hai',dir:'down'},
+    {n:'看企鹅的老奶奶',x:370,y:220,k:'gm',dir:'left'},
+    {n:'卖冲浪板的阿姨',x:120,y:246,k:'ay',dir:'right'}];
+  for(var i=0;i<src.length;i++){
+    npcDraw.push({x:src[i].x,y:src[i].y,look:NPC_LOOKS[src[i].k],name:src[i].n,dir:src[i].dir,kind:'npc'});
+  }
+}
+var origBuild=buildInteractives;
+buildInteractives=function(){origBuild();refreshNpcs();sceneT=0;};
+
+/* ================= 启动 ================= */
+setInterval(function(){if(G.mode==='play')sceneT+=0.05;},50);
+
+(function boot(){
+  var has=false;
+  try{has=!!localStorage.getItem(SAVE_KEY);}catch(e){}
+  if(has){$('btnCont').classList.remove('hidden');}else{$('btnCont').classList.add('hidden');}
+  requestAnimationFrame(loop);
+})();
+
+</script>
+</body>
+</html>
