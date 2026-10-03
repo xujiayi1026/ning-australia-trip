@@ -2,12 +2,14 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <title>注意宁的澳大利亚之旅</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;user-select:none}
-html,body{width:100%;height:100%;background:#0a0c1a;overflow:hidden;font-family:"Microsoft YaHei","PingFang SC",sans-serif;color:#eee}
-#wrap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
-#cv{display:block;image-rendering:pixelated;image-rendering:crisp-edges;background:#000}
+*{margin:0;padding:0;box-sizing:border-box;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;height:100%;background:#0a0c1a;overflow:hidden;font-family:"Microsoft YaHei","PingFang SC",sans-serif;color:#eee;touch-action:none;overscroll-behavior:none}
+#wrap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);touch-action:none}
+#cv{display:block;image-rendering:pixelated;image-rendering:crisp-edges;background:#000;touch-action:none;cursor:crosshair}
 #ui{position:absolute;left:0;top:0;pointer-events:none;overflow:hidden}
 #ui>*{pointer-events:auto}
 .btn{background:#2b3350;border:2px solid #6d7bb0;border-bottom-width:4px;padding:5px 12px;color:#e8ecff;
@@ -87,6 +89,17 @@ html,body{width:100%;height:100%;background:#0a0c1a;overflow:hidden;font-family:
 #fishUI .zone{position:absolute;top:0;height:100%;background:#2e8b57}
 #fishUI .cur{position:absolute;top:-2px;height:20px;width:4px;background:#ffe9a8}
 #fishUI .sp{font-size:11px;color:#9fb0e0;line-height:1.6}
+#fHold{margin-top:8px;padding:9px 14px;background:#2e6b4f;border:2px solid #78d6a5;color:#dfffe9;
+ font-size:14px;letter-spacing:2px;cursor:pointer;touch-action:none;box-shadow:0 3px 0 rgba(0,0,0,.45)}
+#fHold:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.45)}
+#actBtns{position:absolute;right:1.5%;bottom:2%;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+#btnE{width:64px;height:64px;border-radius:50%;background:rgba(46,107,79,.9);border:3px solid #78d6a5;
+ color:#dfffe9;font-size:16px;font-family:inherit;letter-spacing:1px;box-shadow:0 4px 0 rgba(0,0,0,.45);padding:0}
+#btnE:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.45)}
+#actSmall{display:flex;gap:6px}
+#actSmall .btn{font-size:11px;padding:4px 8px;border-bottom-width:3px;background:rgba(43,51,80,.9)}
+#stickHint{position:absolute;left:3%;bottom:3%;font-size:10px;color:rgba(200,214,255,.6);line-height:1.6;
+ text-shadow:1px 1px 0 rgba(0,0,0,.6);pointer-events:none}
 </style>
 </head>
 <body>
@@ -99,8 +112,8 @@ html,body{width:100%;height:100%;background:#0a0c1a;overflow:hidden;font-family:
         <h2>A PIXEL TRIP TO MELBOURNE</h2>
         <button class="btn" id="btnNew">开始新旅程</button>
         <button class="btn" id="btnCont">继续旅程</button>
-        <div class="tip">移动：WASD / 方向键 &nbsp;·&nbsp; 互动：E &nbsp;·&nbsp; 小金鱼：G<br>
-          图鉴：I &nbsp;·&nbsp; 地图：M &nbsp;·&nbsp; 对话：E / 空格</div>
+        <div class="tip">移动：点击地面 / 拖动摇杆 · 互动：E 或右下按钮<br>
+          小金鱼 G · 图鉴 I · 地图 M · 手机平板直接触屏操作</div>
       </div>
     </div>
 
@@ -132,9 +145,19 @@ html,body{width:100%;height:100%;background:#0a0c1a;overflow:hidden;font-family:
         <button class="btn" id="bBook">图鉴 I</button>
         <button class="btn" id="bCloth">换装</button>
         <button class="btn g" id="bFish">小金鱼 G</button>
+        <button class="btn" id="bBgm">♪ 音乐</button>
+        <button class="btn" id="bFull">⛶ 全屏</button>
       </div>
     </div>
     <div id="hint" class="hidden"></div>
+
+    <div id="actBtns" class="hidden">
+      <button id="btnE">互动</button>
+      <div id="actSmall">
+        <button class="btn" id="btnEsc">返回</button>
+      </div>
+    </div>
+    <div id="stickHint" class="hidden">点击地面移动<br>拖动可连续行走</div>
 
     <div id="dlg" class="hidden">
       <canvas id="dlgPv" width="52" height="52"></canvas>
@@ -157,7 +180,8 @@ html,body{width:100%;height:100%;background:#0a0c1a;overflow:hidden;font-family:
     <div id="fishUI" class="card hidden">
       <div class="st" id="fSt">抛竿…</div>
       <div class="bar"><div class="zone" id="fZone"></div><div class="cur" id="fCur"></div></div>
-      <div class="sp" id="fSp">按住 空格 收线，让游标停在绿色区域！</div>
+      <div class="sp" id="fSp">按住下方按钮收线，让游标停在绿色区域！</div>
+      <div id="fHold">按住收线</div>
     </div>
 
     <div id="toast"></div>
@@ -172,12 +196,34 @@ g.imageSmoothingEnabled=false;
 var ui=document.getElementById('ui'),wrap=document.getElementById('wrap');
 var SCALE=2;
 function resize(){
-  SCALE=Math.max(1,Math.floor(Math.min(window.innerWidth/W,(window.innerHeight-4)/H)));
-  cv.style.width=(W*SCALE)+'px';cv.style.height=(H*SCALE)+'px';
-  wrap.style.width=(W*SCALE)+'px';wrap.style.height=(H*SCALE)+'px';
-  ui.style.width=(W*SCALE)+'px';ui.style.height=(H*SCALE)+'px';
+  var s=Math.min(window.innerWidth/W,window.innerHeight/H);
+  if(!isFinite(s)||s<=0)s=1;
+  SCALE=s;
+  var w=Math.max(W,Math.round(W*s)),h=Math.max(H,Math.round(H*s));
+  cv.style.width=w+'px';cv.style.height=h+'px';
+  wrap.style.width=w+'px';wrap.style.height=h+'px';
+  ui.style.width=w+'px';ui.style.height=h+'px';
 }
-window.addEventListener('resize',resize);resize();
+window.addEventListener('resize',resize);
+window.addEventListener('orientationchange',function(){setTimeout(resize,120);});
+resize();
+
+/* ================= 全屏 ================= */
+function toggleFull(){
+  var d=document,el=d.documentElement;
+  var full=d.fullscreenElement||d.webkitFullscreenElement;
+  try{
+    if(!full){
+      var f=el.requestFullscreen||el.webkitRequestFullscreen;
+      if(f){f.call(el);setTimeout(resize,200);}
+      else toast('此浏览器不支持全屏，画面已自动铺满窗口');
+    }else{
+      var x=d.exitFullscreen||d.webkitExitFullscreen;
+      if(x)x.call(d);
+    }
+  }catch(e){toast('无法进入全屏');}
+}
+document.addEventListener('fullscreenchange',function(){setTimeout(resize,60);});
 
 function $(id){return document.getElementById(id)}
 function hide(){for(var i=0;i<arguments.length;i++)$(arguments[i]).classList.add('hidden')}
@@ -201,6 +247,101 @@ var toastT=0;
 function toast(msg){
   var t=$('toast');t.textContent=msg;t.classList.add('show');toastT=2.2;
 }
+
+/* ================= 背景音乐（Web Audio 程序化生成 · 星露谷式民谣） ================= */
+var BGM={ctx:null,master:null,muted:false,on:false,step:0,next:0,timer:null};
+var BPM=88,SPU=60/BPM/2;
+function mtof(m){return 440*Math.pow(2,(m-69)/12);}
+var CHORDS=[ /* 8 小节循环：G Em C D | G Em C D  [根音, 1,2,3,4] */
+  [43,55,59,62,67],[40,52,55,59,64],[36,52,55,60,64],[38,50,54,57,62],
+  [43,55,59,62,67],[40,52,55,59,64],[36,52,55,60,64],[38,50,54,57,62]
+];
+var ARP=[1,2,3,4,2,3,4,3];
+var MEL=[
+  [4,74,2],[6,71,2],[8,76,3],[12,74,2],[14,71,2],
+  [16,72,2],[18,76,2],[20,74,4],[24,69,2],[26,74,2],[28,71,4],
+  [32,71,2],[34,74,2],[36,67,4],[40,76,3],[44,71,3],
+  [48,72,2],[50,69,2],[52,67,2],[54,69,2],[56,67,6]
+];
+function vPluck(t,m,v,dur){
+  var c=BGM.ctx,o=c.createOscillator(),gn=c.createGain(),lp=c.createBiquadFilter();
+  o.type='triangle';o.frequency.value=mtof(m);
+  lp.type='lowpass';lp.frequency.value=2400;
+  gn.gain.setValueAtTime(0.0001,t);
+  gn.gain.exponentialRampToValueAtTime(v,t+0.015);
+  gn.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+  o.connect(lp);lp.connect(gn);gn.connect(BGM.master);
+  o.start(t);o.stop(t+dur+0.05);
+}
+function vBass(t,m,v,dur){
+  var c=BGM.ctx,o=c.createOscillator(),gn=c.createGain(),lp=c.createBiquadFilter();
+  o.type='sine';o.frequency.value=mtof(m);
+  lp.type='lowpass';lp.frequency.value=700;
+  gn.gain.setValueAtTime(0.0001,t);
+  gn.gain.exponentialRampToValueAtTime(v,t+0.02);
+  gn.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+  o.connect(lp);lp.connect(gn);gn.connect(BGM.master);
+  o.start(t);o.stop(t+dur+0.05);
+}
+function vFlute(t,m,v,dur){
+  var c=BGM.ctx,o=c.createOscillator(),gn=c.createGain(),
+      vb=c.createOscillator(),vg=c.createGain();
+  o.type='sine';o.frequency.value=m;
+  vb.frequency.value=5.2;vg.gain.value=m*0.005;
+  vb.connect(vg);vg.connect(o.frequency);
+  gn.gain.setValueAtTime(0.0001,t);
+  gn.gain.exponentialRampToValueAtTime(v,t+0.09);
+  gn.gain.setValueAtTime(v,t+dur*0.6);
+  gn.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+  o.connect(gn);gn.connect(BGM.master);
+  o.start(t);vb.start(t);o.stop(t+dur+0.1);vb.stop(t+dur+0.1);
+}
+function bgmEnsure(){
+  if(BGM.ctx)return true;
+  var AC=window.AudioContext||window.webkitAudioContext;
+  if(!AC)return false;
+  try{BGM.ctx=new AC();}catch(e){return false;}
+  BGM.master=BGM.ctx.createGain();
+  BGM.master.gain.value=BGM.muted?0:0.5;
+  BGM.master.connect(BGM.ctx.destination);
+  return true;
+}
+function bgmResume(){if(BGM.ctx&&BGM.ctx.state==='suspended')BGM.ctx.resume();}
+function bgmStart(){
+  if(!bgmEnsure())return;
+  bgmResume();
+  if(BGM.on)return;
+  BGM.on=true;BGM.step=0;
+  BGM.next=BGM.ctx.currentTime+0.2;
+  BGM.timer=setInterval(bgmTick,90);
+}
+function bgmTick(){
+  if(!BGM.on||!BGM.ctx||BGM.ctx.state!=='running')return;
+  var now=BGM.ctx.currentTime;
+  if(BGM.next<now)BGM.next=now+0.03;
+  while(BGM.next<now+0.3){
+    var s=BGM.step%64,bar=(s/8)|0,inb=s%8,ch=CHORDS[bar];
+    if(inb===0||inb===4)vBass(BGM.next,ch[0],0.26,0.55);
+    if(inb===4&&bar%2===1)vBass(BGM.next,ch[0]+7,0.15,0.3);
+    vPluck(BGM.next,ch[ARP[inb]],0.15,0.45);
+    for(var i=0;i<MEL.length;i++)if(MEL[i][0]===s)
+      vFlute(BGM.next,mtof(MEL[i][1]),0.17,MEL[i][2]*SPU*0.95);
+    BGM.next+=SPU;BGM.step++;
+  }
+}
+function bgmToggle(){
+  if(!BGM.ctx&&!bgmEnsure()){toast('当前浏览器不支持音频');return;}
+  BGM.muted=!BGM.muted;
+  BGM.master.gain.value=BGM.muted?0:0.5;
+  if(BGM.muted)bgmStop();else bgmStart();
+  $('bBgm').textContent=BGM.muted?'♪ 关':'♪ 开';
+  toast(BGM.muted?'背景音乐已关闭':'背景音乐已开启');
+}
+function bgmStop(){BGM.on=false;if(BGM.timer){clearInterval(BGM.timer);BGM.timer=null;}}
+document.addEventListener('visibilitychange',function(){
+  if(document.hidden){if(BGM.on){bgmStop();BGM._wasOn=true;}}
+  else if(BGM._wasOn){BGM._wasOn=false;bgmStart();}
+});
 
 /* ================= 调色 ================= */
 var HAIRC=['#2b2320','#6b4226','#c98a3d','#e6cf8a','#d94f4f','#4f6ad9','#8d8d96','#c86bd0'];
@@ -370,6 +511,7 @@ var keys={};
 window.addEventListener('keydown',function(e){
   keys[e.code]=true;
   if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].indexOf(e.code)>=0)e.preventDefault();
+  bgmResume();
   onKey(e.code);
 });
 window.addEventListener('keyup',function(e){keys[e.code]=false;});
@@ -394,6 +536,82 @@ function onKey(code){
     if(code==='KeyI')openBook();
     if(code==='KeyM')openMap();
   }
+}
+
+/* ================= 鼠标 / 触屏输入 ================= */
+var IS_TOUCH=('ontouchstart' in window)||(navigator.maxTouchPoints||0)>0;
+var ptr={down:false,id:-1,ox:0,oy:0,x:0,y:0,drag:false,ready:false};
+var moveTarget=null,stuckT=0,holdFish=false;
+function cvsPos(e){
+  var r=cv.getBoundingClientRect();
+  return {x:(e.clientX-r.left)/r.width*W,y:(e.clientY-r.top)/r.height*H};
+}
+function tapWorld(x,y){
+  if(G.mode!=='play')return;
+  if(dialog.active){nextDialog();return;}
+  if(panelOpen()||cardsOpen()||fish.on)return;
+  var best=null,bd=1e9;
+  for(var i=0;i<interactives.length;i++){
+    var it=interactives[i],r=Math.max(16,it.r||26);
+    var d=dist(x,y,it.x,it.y);
+    if(d<r&&d<bd){bd=d;best=it;}
+  }
+  if(best){moveTarget={x:best.x,y:best.y,act:best};stuckT=0;return;}
+  if(gold.visible&&!G.goldHome&&dist(x,y,gold.x,gold.y)<22){
+    moveTarget={x:gold.x,y:gold.y,act:'gold'};stuckT=0;return;
+  }
+  var nx=clamp(x,bounds.x1,bounds.x2),ny=clamp(y,bounds.y1,bounds.y2);
+  if(blocked(nx,ny)){toast('那边过不去～');return;}
+  moveTarget={x:nx,y:ny,act:null};stuckT=0;
+}
+cv.addEventListener('pointerdown',function(e){
+  bgmResume();
+  if(G.mode==='intro'){skipIntro();return;}
+  var p=cvsPos(e);
+  if(G.mode==='map'){mapClick(p.x,p.y);return;}
+  if(G.mode!=='play')return;
+  if(dialog.active){nextDialog();return;}
+  if(panelOpen()||cardsOpen())return;
+  if(fish.on){holdFish=true;return;}
+  e.preventDefault();
+  try{cv.setPointerCapture(e.pointerId);}catch(err){}
+  ptr.down=true;ptr.id=e.pointerId;ptr.ready=true;
+  ptr.ox=p.x;ptr.oy=p.y;ptr.x=p.x;ptr.y=p.y;ptr.drag=false;
+});
+cv.addEventListener('pointermove',function(e){
+  if(!ptr.down||e.pointerId!==ptr.id)return;
+  var p=cvsPos(e);ptr.x=p.x;ptr.y=p.y;
+  if(Math.abs(p.x-ptr.ox)+Math.abs(p.y-ptr.oy)>7)ptr.drag=true;
+});
+function ptrEnd(e){
+  holdFish=false;
+  if(!ptr.down)return;
+  if(!ptr.drag){
+    var p=(e&&e.clientX!==undefined)?cvsPos(e):{x:ptr.ox,y:ptr.oy};
+    tapWorld(p.x,p.y);
+  }
+  ptr.down=false;ptr.drag=false;ptr.id=-1;
+}
+cv.addEventListener('pointerup',ptrEnd);
+cv.addEventListener('pointercancel',function(){ptr.down=false;ptr.drag=false;ptr.id=-1;holdFish=false;});
+window.addEventListener('pointerup',function(){holdFish=false;});
+cv.addEventListener('contextmenu',function(e){e.preventDefault();});
+$('dlg').onclick=function(){if(dialog.active)nextDialog();};
+
+/* 右下角操作按钮 */
+$('btnE').onclick=function(){bgmResume();onKey('KeyE');};
+$('btnEsc').onclick=function(){
+  if(panelOpen()||cardsOpen()){closeAllPanels();return;}
+  if(G.mode==='map'){enterScene(G.scene);return;}
+  if(G.mode==='play')openMap();
+};
+function syncActBtns(){
+  var inPlay=(G.mode==='play'||G.mode==='map')&&!fish.on&&
+             !panelOpen()&&!cardsOpen();
+  $('actBtns').classList.toggle('hidden',!inPlay);
+  $('btnE').classList.toggle('hidden',G.mode!=='play');
+  var sh=$('stickHint');
+  sh.classList.toggle('hidden',!(IS_TOUCH&&G.mode==='play'&&!dialog.active&&!fish.on&&!panelOpen()&&!cardsOpen()));
 }
 
 /* ================= 对话系统 ================= */
@@ -494,6 +712,7 @@ function enterScene(id,px,py){
   dialog.active=false;
   G.mode='play';
   show('hud');updateHud();
+  bgmStart();
   bounds.y1=(id==='station')?168:(id==='beach')?204:(id==='island')?150:170;
   bounds.y2=H-18;
   if(id==='island'){bounds.x1=48;bounds.x2=432;bounds.y2=252;}
@@ -516,17 +735,47 @@ function movePlayer(dt){
   if(keys.ArrowRight||keys.KeyD)dx+=1;
   if(keys.ArrowUp||keys.KeyW)dy-=1;
   if(keys.ArrowDown||keys.KeyS)dy+=1;
+  if(dx||dy)moveTarget=null;
+  /* 触屏/鼠标拖动摇杆 */
+  if(!dx&&!dy&&ptr.down&&ptr.drag){
+    var jx=ptr.x-ptr.ox,jy=ptr.y-ptr.oy,mm=Math.sqrt(jx*jx+jy*jy);
+    if(mm>6){
+      var k=Math.min(1,(mm-6)/26);
+      dx=jx/mm*k;dy=jy/mm*k;moveTarget=null;
+    }
+  }
+  /* 点击地面：自动走过去 */
+  if(!dx&&!dy&&moveTarget){
+    var tx=moveTarget.x,ty=moveTarget.y;
+    if(moveTarget.act==='gold'){tx=gold.x;ty=gold.y;}
+    var td=dist(player.x,player.y,tx,ty);
+    if(td<7){
+      var act=moveTarget.act;moveTarget=null;stuckT=0;
+      player.moving=false;player.frame=0;player.animT=0;
+      if(act==='gold'){
+        if(dist(player.x,player.y,gold.x,gold.y)<42)startDialog('小金鱼',goldLook(),goldLines());
+      }else if(act){act.fn();}
+      return;
+    }
+    dx=(tx-player.x)/td;dy=(ty-player.y)/td;
+  }
   player.moving=!!(dx||dy);
   if(player.moving){
-    if(dx&&dy){dx*=0.707;dy*=0.707;}
+    var mag=Math.sqrt(dx*dx+dy*dy);
+    if(mag>1){dx/=mag;dy/=mag;}
+    var px=player.x,py=player.y;
     var step=sp*dt,nx=clamp(player.x+dx*step,bounds.x1,bounds.x2),ny=clamp(player.y,bounds.y1,bounds.y2);
     if(dx&&!blocked(nx,ny))player.x=nx;
     ny=clamp(player.y+dy*step,bounds.y1,bounds.y2);nx=player.x;
     if(dy&&!blocked(nx,ny))player.y=ny;
+    if(player.x===px&&player.y===py){
+      stuckT+=dt;
+      if(stuckT>0.9){var hadT=!!moveTarget;moveTarget=null;stuckT=0;if(hadT)toast('走不过去～');}
+    }else stuckT=0;
     if(Math.abs(dx)>Math.abs(dy))player.dir=dx<0?'left':'right';
     else player.dir=dy<0?'up':'down';
     player.animT+=dt*8;player.frame=Math.floor(player.animT)%4;
-  }else{player.frame=0;player.animT=0;}
+  }else{player.frame=0;player.animT=0;stuckT=0;}
 }
 function updateGold(dt){
   if(G.goldHome){
@@ -1002,11 +1251,18 @@ function startFishing(){
   fish.zone=rnd(0.15,0.6);fish.zoneT=0;
   show('fishUI');
   $('fSt').textContent='抛竿…等待鱼儿咬钩';
-  $('fSp').textContent='稳住，等“！”出现再按住 空格 收线';
+  $('fSp').textContent='稳住，等“！”出现再按住收线按钮';
   $('fZone').style.left=(fish.zone*100)+'%';
   $('fZone').style.width='26%';
 }
-function closeFishing(){fish.on=false;hide('fishUI')}
+function closeFishing(){fish.on=false;holdFish=false;hide('fishUI')}
+(function bindHold(){
+  var fh=$('fHold');
+  fh.addEventListener('pointerdown',function(e){e.preventDefault();e.stopPropagation();holdFish=true;bgmResume();});
+  fh.addEventListener('pointerup',function(){holdFish=false;});
+  fh.addEventListener('pointercancel',function(){holdFish=false;});
+  fh.addEventListener('pointerleave',function(){holdFish=false;});
+})();
 function updateFishing(dt){
   if(!fish.on)return;
   if(fish.phase===0){
@@ -1015,7 +1271,7 @@ function updateFishing(dt){
     if(fish.wait<=0){
       fish.phase=1;fish.got=pickFish();
       $('fSt').textContent='！！鱼上钩了！';
-      $('fSp').textContent='按住 空格 收线，让游标停在绿色区域！';
+      $('fSp').textContent='按住下方按钮收线，让游标停在绿色区域！';
       setTimeout(function(){if(fish.on&&fish.phase===1)fish.phase=2,fish.hold=0;},600);
     }
     return;
@@ -1025,7 +1281,7 @@ function updateFishing(dt){
     fish.zoneT-=dt;
     if(fish.zoneT<=0){fish.zone=rnd(0.05,0.65);fish.zoneT=rnd(0.7,1.4);
       $('fZone').style.left=(fish.zone*100)+'%';}
-    var hold=keys.Space;
+    var hold=keys.Space||holdFish;
     fish.vel+=(hold?-1.9:1.5)*dt;
     fish.vel*=0.94;
     fish.cur=clamp(fish.cur+fish.vel*dt,0,1);
@@ -1142,6 +1398,7 @@ var mapAnim=0;
 function openMap(){
   G.mode='map';closeAllPanels();hide('hint','creator','titleScr');$('dlg').classList.add('hidden');
   dialog.active=false;
+  bgmStart();
   updateHud();
 }
 function drawMap(t){
@@ -1364,6 +1621,7 @@ function typeLine2(s,el,x,y,color,size){
 function finishIntro(){
   if(intro.done)return;
   intro.done=true;
+  bgmStart();
   openCreator(false);
 }
 
@@ -1486,16 +1744,13 @@ function backFromCreator(msg){
 }
 $('inName').oninput=function(){$('pvName').textContent=this.value||'宁';};
 /* ================= HUD 按钮 ================= */
-$('bMap').onclick=function(){openMap()};
+$('bMap').onclick=function(){ if(G.mode==='map')enterScene(G.scene); else openMap(); };
 $('bScene').onclick=function(){ if(G.mode==='play')openCards(); };
 $('bBook').onclick=function(){openBook()};
 $('bCloth').onclick=function(){openCreator(true)};
 $('bFish').onclick=function(){toggleGoldfish()};
-cv.addEventListener('click',function(e){
-  var r=cv.getBoundingClientRect();
-  var mx=(e.clientX-r.left)/r.width*W,my=(e.clientY-r.top)/r.height*H;
-  if(G.mode==='map')mapClick(mx,my);
-});
+$('bBgm').onclick=function(){bgmToggle()};
+$('bFull').onclick=function(){toggleFull()};
 
 /* ================= 预览绘制 ================= */
 var pvCvs=$('pv'),pvG=pvCvs.getContext('2d');
@@ -1520,6 +1775,7 @@ function loop(ts){
 }
 function update(dt){
   if(toastT>0){toastT-=dt;if(toastT<=0)$('toast').classList.remove('show');}
+  syncActBtns();
   if(G.mode==='intro'){intro.t+=dt;return;}
   if(G.mode==='creator'){pvT+=dt;if(pvT>0.28){pvT=0;pvFrame=(pvFrame+1)%4;}drawPreview();return;}
   if(G.mode==='play'){
@@ -1595,6 +1851,26 @@ function drawPlay(t){
       drawChar(g,en.x,en.y,en.look,en.dir||'down',en.frame||0,1);
       if(dist(player.x,player.y,en.x,en.y)<40)txt(en.name,en.x,en.y-34,'#dfffe9',7,'center');
     }
+  }
+
+  /* 点击移动目标标记 */
+  if(moveTarget&&G.mode==='play'){
+    var mtx=moveTarget.x,mty=moveTarget.y;
+    if(moveTarget.act==='gold'){mtx=gold.x;mty=gold.y;}
+    var bob=Math.sin(t*7)*2;
+    g.fillStyle='rgba(126,224,176,.92)';
+    g.beginPath();g.moveTo(mtx,mty-22+bob);g.lineTo(mtx-5,mty-30+bob);g.lineTo(mtx+5,mty-30+bob);g.closePath();g.fill();
+    R(mtx-4,mty-21+bob,8,2,'rgba(126,224,176,.5)');
+  }
+  /* 拖动摇杆指示 */
+  if(ptr.down&&ptr.drag&&G.mode==='play'){
+    g.globalAlpha=.3;g.fillStyle='#0b1024';
+    g.beginPath();g.arc(ptr.ox,ptr.oy,20,0,6.2832);g.fill();
+    g.globalAlpha=.8;g.fillStyle='#ffe9a8';
+    var sjx=ptr.x-ptr.ox,sjy=ptr.y-ptr.oy,smm=Math.sqrt(sjx*sjx+sjy*sjy);
+    if(smm>1){var sc=Math.min(smm,26)/smm;sjx*=sc;sjy*=sc;}
+    g.beginPath();g.arc(ptr.ox+sjx,ptr.oy+sjy,8,0,6.2832);g.fill();
+    g.globalAlpha=1;
   }
 
   /* 黑边字幕（场景名） */
