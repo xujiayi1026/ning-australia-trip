@@ -6,25 +6,29 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>注意宁的澳大利亚之旅</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+*{margin:0;padding:0;box-sizing:border-box;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;
+ cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' shape-rendering='crispEdges'%3E%3Cpath d='M4 2 L4 19 L8.5 14.8 L11 21 L14.4 19.4 L11.9 13.6 L18 13.4 Z' fill='%23ffffff' stroke='%23000000' stroke-width='1.8' stroke-linejoin='miter'/%3E%3C/svg%3E") 4 2, default}
+input,textarea{cursor:text}
 html,body{width:100%;height:100%;background:#0a0c1a;overflow:hidden;font-family:"Microsoft YaHei","PingFang SC",sans-serif;color:#eee;touch-action:none;overscroll-behavior:none}
 #wrap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);touch-action:none}
 #cv{display:block;image-rendering:pixelated;image-rendering:crisp-edges;background:#000;touch-action:none;cursor:crosshair}
 #ui{position:absolute;left:0;top:0;pointer-events:none;overflow:hidden}
 #ui>*{pointer-events:auto}
-.btn{background:#2b3350;border:2px solid #6d7bb0;border-bottom-width:4px;padding:5px 12px;color:#e8ecff;
- font-size:13px;cursor:pointer;font-family:inherit;letter-spacing:1px}
-.btn:hover{background:#3d4878}
-.btn:active{border-bottom-width:2px;transform:translateY(2px)}
+.btn{background:#2b3350;border:3px solid #8f9fd8;border-bottom-width:6px;padding:5px 12px;color:#e8ecff;
+ font-size:14px;font-family:inherit;letter-spacing:1px;box-shadow:inset 0 0 0 1px #171c36;
+ transition:background .1s}
+.btn:hover{background:#3d4a86;border-color:#ffd873;color:#fff}
+.btn:active{border-bottom-width:3px;transform:translateY(3px)}
 .btn.g{background:#2e6b4f;border-color:#78d6a5;color:#dfffe9}
+.btn.g:hover{background:#378a64;border-color:#ffe9a8}
 .hidden{display:none!important}
 .screen{position:absolute;left:0;top:0;width:100%;height:100%}
 #titleBox{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);text-align:center}
 #titleBox h1{font-size:34px;letter-spacing:4px;color:#ffe9a8;text-shadow:3px 3px 0 #7a3b1e,6px 6px 0 rgba(0,0,0,.5);margin-bottom:6px}
 #titleBox h2{font-size:13px;letter-spacing:6px;color:#9fd7ff;margin-bottom:26px;font-weight:normal}
-#titleBox .btn{margin:0 6px;font-size:15px;padding:8px 20px}
-.tip{margin-top:22px;font-size:11px;color:#8b93b8;line-height:1.8}
-.card{background:#1b2140;border:3px solid #6d7bb0;box-shadow:0 6px 0 rgba(0,0,0,.5);border-radius:4px}
+#titleBox .btn{margin:0 6px;font-size:16px;padding:8px 22px}
+.tip{margin-top:22px;font-size:12px;color:#8b93b8;line-height:1.8}
+.card{background:#1b2140;border:3px solid #8f9fd8;box-shadow:0 0 0 3px #10142c,7px 8px 0 rgba(0,0,0,.5);border-radius:0}
 #creator{background:rgba(6,8,20,.92)}
 #creMain{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:14px}
 #previewBox{padding:10px;text-align:center}
@@ -44,14 +48,24 @@ html,body{width:100%;height:100%;background:#0a0c1a;overflow:hidden;font-family:
 .nameRow input{background:#10142c;border:2px solid #4a5480;color:#ffe9a8;padding:4px 8px;width:150px;
  font-size:13px;font-family:inherit;outline:none}
 #creBtns{display:flex;gap:8px;margin-top:10px}
-#hud{position:absolute;left:0;top:0;width:100%;padding:5px 6px;display:flex;justify-content:space-between;
- align-items:flex-start;font-size:12px}
-#hudL{background:rgba(16,20,44,.8);border:2px solid #4a5480;padding:3px 9px;line-height:1.5}
-#hudL b{color:#ffe9a8}
-#hudR{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
-#hudR .btn{font-size:11px;padding:3px 7px;border-bottom-width:3px}
-#hint{position:absolute;left:50%;bottom:76px;transform:translateX(-50%);background:rgba(16,20,44,.86);
- border:2px solid #ffe9a8;color:#ffe9a8;padding:2px 10px;font-size:12px;border-radius:3px}
+#hud{position:absolute;left:0;top:0;width:100%;padding:6px 7px;display:flex;justify-content:space-between;
+ align-items:flex-start;font-size:13px;gap:8px}
+#hudL{position:relative;background:rgba(14,18,42,.92);border:3px solid #ffd873;padding:5px 12px 5px 26px;
+ line-height:1.55;box-shadow:0 0 0 3px #241d4a,5px 5px 0 rgba(0,0,0,.45);letter-spacing:.5px}
+#hudL:before{content:'';position:absolute;left:9px;top:9px;width:8px;height:8px;background:#7ee0b0;
+ box-shadow:0 0 0 2px #10142c,0 10px 0 -2px #7ee0b0;transform:rotate(45deg)}
+#hudL b{color:#ffe9a8;font-size:15px;letter-spacing:2px}
+#hudR{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;max-width:70%}
+#hudR .btn{font-size:13px;padding:4px 8px 5px;border-width:3px;border-bottom-width:6px;letter-spacing:1px;
+ display:flex;align-items:center;gap:4px;background:#2b3350;border-color:#8f9fd8;
+ box-shadow:inset 0 0 0 1px #171c36}
+#hudR .btn:hover{background:#3d4a86;border-color:#ffd873}
+#hudR .btn.g{background:#2e6b4f;border-color:#78d6a5}
+#hudR .btn.g:hover{background:#378a64}
+.hi{width:11px;height:11px;image-rendering:pixelated;display:block}
+#hint{position:absolute;left:50%;bottom:74px;transform:translateX(-50%);background:rgba(14,18,42,.9);
+ border:3px solid #ffd873;color:#ffe9a8;padding:3px 12px;font-size:13px;letter-spacing:1px;
+ box-shadow:0 0 0 2px #241d4a,4px 4px 0 rgba(0,0,0,.45)}
 #dlg{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);width:92%;height:64px;
  background:#141a36;border:3px solid #7c8ac4;box-shadow:0 4px 0 rgba(0,0,0,.5);display:flex;padding:6px 10px 6px 6px}
 #dlgPv{width:52px;height:52px;background:#0e1230;border:2px solid #4a5480;flex:none}
@@ -59,18 +73,40 @@ html,body{width:100%;height:100%;background:#0a0c1a;overflow:hidden;font-family:
 #dlgT .who{color:#7ee0b0;font-size:12px;display:block;margin-bottom:1px}
 #dlgA{position:absolute;right:8px;bottom:4px;color:#ffe9a8;font-size:12px;animation:bl .6s infinite alternate}
 @keyframes bl{from{opacity:.2}to{opacity:1}}
-#panel{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:76%;height:74%;padding:12px}
-#panel h3{font-size:15px;color:#ffe9a8;letter-spacing:2px;margin-bottom:8px}
-#panel .tabs{display:flex;gap:6px;margin-bottom:8px}
-#panel .tab{font-size:12px;padding:3px 12px;background:#333d63;border:2px solid #6d7bb0;cursor:pointer}
-#panel .tab.on{background:#4a5c9e;color:#ffe9a8}
-#panelBody{height:calc(100% - 70px);overflow-y:auto;padding-right:4px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:6px}
-.item{background:#10142c;border:2px solid #4a5480;padding:5px 6px;font-size:11px;line-height:1.5}
-.item b{color:#ffe9a8;display:block;font-size:12px}
-.item.lock{opacity:.45;color:#7d86ad}
-.item .no{color:#5d6690}
-.closeX{position:absolute;right:8px;top:8px;font-size:12px;padding:2px 9px}
+#panel{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:92%;height:88%;
+ background:none;border:none;box-shadow:none;border-radius:0;padding:0;pointer-events:auto}
+#book{position:relative;width:100%;height:100%;display:flex;flex-direction:column;
+ background:linear-gradient(90deg,#e9d8ae 0 49%,#cfb888 49.4% 50.6%,#f2e5c1 51% 100%);
+ border:4px solid #6b4a2a;box-shadow:0 0 0 4px #3d2c18,8px 10px 0 rgba(0,0,0,.5)}
+#book:before{content:'';position:absolute;left:50%;top:0;bottom:0;width:18px;transform:translateX(-50%);
+ pointer-events:none;z-index:3;background:linear-gradient(90deg,rgba(80,50,10,0),rgba(80,50,10,.32) 45%,rgba(80,50,10,.42) 50%,rgba(80,50,10,.32) 55%,rgba(80,50,10,0))}
+#book:after{content:'';position:absolute;inset:5px;border:1px solid rgba(107,74,42,.45);pointer-events:none;z-index:3}
+.bkTop{flex:none;text-align:center;padding:8px 0 4px;position:relative;z-index:4}
+#pTitle{display:inline-block;background:#7a3b1e;border:3px solid #3d2c18;color:#ffe9a8;font-size:15px;
+ letter-spacing:4px;padding:3px 20px;box-shadow:4px 4px 0 rgba(0,0,0,.35)}
+.bkFoot{flex:none;text-align:center;font-size:10px;color:#8a6a44;letter-spacing:4px;padding:2px 0 7px}
+#panelBody{flex:1;display:flex;overflow:hidden;padding:4px 6px 6px;min-height:0}
+.pg{flex:1;min-width:0;overflow-y:auto;padding:5px 8px;scrollbar-width:thin}
+.pg::-webkit-scrollbar{width:7px}
+.pg::-webkit-scrollbar-track{background:rgba(107,74,42,.14)}
+.pg::-webkit-scrollbar-thumb{background:#a07a4a;border:1px solid #e9d8ae}
+.pg h4{font-size:13px;color:#7a3b1e;letter-spacing:2px;margin-bottom:5px;
+ border-bottom:2px dashed #b08d55;padding-bottom:3px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:6px}
+.item{background:rgba(255,251,238,.62);border:2px solid #b08d55;padding:5px 3px 6px;font-size:10px;line-height:1.4;
+ text-align:center;color:#5a4326;box-shadow:2px 2px 0 rgba(107,74,42,.22)}
+.item b{color:#7a3b1e;display:block;font-size:11px;margin-bottom:2px}
+.item .ic{display:block;width:48px;height:48px;margin:0 auto 3px;image-rendering:pixelated;
+ background:#fdf6e2;border:2px solid #c9a44a}
+.item.lock{opacity:.6;color:#8a7a5c;background:rgba(240,232,210,.5)}
+.item.lock .ic{filter:grayscale(.85) brightness(.95)}
+.item .no{color:#9a8663;font-size:9px}
+.item .desc{display:block;font-size:9px;color:#7d6644;margin-top:2px}
+.item .btn{font-size:10px;padding:1px 5px;border-bottom-width:3px;margin-top:3px;letter-spacing:0}
+#panel .closeX{position:absolute;right:-3px;top:-3px;font-size:12px;padding:4px 11px;background:#7a3b1e;
+ border:3px solid #3d2c18;color:#ffe9a8;box-shadow:-3px 4px 0 rgba(0,0,0,.35);z-index:6;letter-spacing:2px}
+#panel .closeX:hover{background:#9c4c26}
+#panel .tabs{display:none}
 #cards{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:80%;padding:14px}
 #cards h3{font-size:15px;color:#ffe9a8;margin-bottom:10px;text-align:center;letter-spacing:3px}
 .cardRow{display:flex;gap:10px;justify-content:center}
@@ -140,13 +176,13 @@ html,body{width:100%;height:100%;background:#0a0c1a;overflow:hidden;font-family:
     <div id="hud" class="hidden">
       <div id="hudL"></div>
       <div id="hudR">
-        <button class="btn" id="bMap">地图 M</button>
-        <button class="btn" id="bScene">场景</button>
-        <button class="btn" id="bBook">图鉴 I</button>
-        <button class="btn" id="bCloth">换装</button>
-        <button class="btn g" id="bFish">小金鱼 G</button>
-        <button class="btn" id="bBgm">♪ 音乐</button>
-        <button class="btn" id="bFull">⛶ 全屏</button>
+        <button class="btn" id="bMap"><canvas class="hi" width="9" height="9" data-hi="map"></canvas>地图</button>
+        <button class="btn" id="bScene"><canvas class="hi" width="9" height="9" data-hi="scene"></canvas>场景</button>
+        <button class="btn" id="bBook"><canvas class="hi" width="9" height="9" data-hi="book"></canvas>图鉴</button>
+        <button class="btn" id="bCloth"><canvas class="hi" width="9" height="9" data-hi="cloth"></canvas>换装</button>
+        <button class="btn g" id="bFish"><canvas class="hi" width="9" height="9" data-hi="fish"></canvas><span id="fishLbl">小金鱼</span></button>
+        <button class="btn" id="bBgm"><canvas class="hi" width="9" height="9" data-hi="music"></canvas><span id="bgmLbl">音乐</span></button>
+        <button class="btn" id="bFull"><canvas class="hi" width="9" height="9" data-hi="full"></canvas>全屏</button>
       </div>
     </div>
     <div id="hint" class="hidden"></div>
@@ -165,11 +201,17 @@ html,body{width:100%;height:100%;background:#0a0c1a;overflow:hidden;font-family:
       <div id="dlgA">▼ E</div>
     </div>
 
-    <div id="panel" class="card hidden">
-      <button class="btn closeX" id="pClose">关闭</button>
-      <h3 id="pTitle">图鉴</h3>
-      <div class="tabs" id="pTabs"></div>
-      <div id="panelBody"></div>
+    <div id="panel" class="hidden">
+      <button class="btn closeX" id="pClose">合上</button>
+      <div id="book">
+        <div class="bkTop"><span id="pTitle">旅行图鉴</span></div>
+        <div class="tabs" id="pTabs"></div>
+        <div id="panelBody">
+          <div class="pg" id="pgL"></div>
+          <div class="pg" id="pgR"></div>
+        </div>
+        <div class="bkFoot">— TRAVEL JOURNAL · 注意宁 —</div>
+      </div>
     </div>
 
     <div id="cards" class="card hidden">
@@ -199,10 +241,12 @@ function resize(){
   var s=Math.min(window.innerWidth/W,window.innerHeight/H);
   if(!isFinite(s)||s<=0)s=1;
   SCALE=s;
-  var w=Math.max(W,Math.round(W*s)),h=Math.max(H,Math.round(H*s));
+  var w=Math.max(1,Math.round(W*s)),h=Math.max(1,Math.round(H*s));
   cv.style.width=w+'px';cv.style.height=h+'px';
   wrap.style.width=w+'px';wrap.style.height=h+'px';
-  ui.style.width=w+'px';ui.style.height=h+'px';
+  ui.style.width=W+'px';ui.style.height=H+'px';
+  ui.style.transformOrigin='0 0';
+  ui.style.transform='scale('+s+')';
 }
 window.addEventListener('resize',resize);
 window.addEventListener('orientationchange',function(){setTimeout(resize,120);});
@@ -333,15 +377,152 @@ function bgmToggle(){
   if(!BGM.ctx&&!bgmEnsure()){toast('当前浏览器不支持音频');return;}
   BGM.muted=!BGM.muted;
   BGM.master.gain.value=BGM.muted?0:0.5;
-  if(BGM.muted)bgmStop();else bgmStart();
-  $('bBgm').textContent=BGM.muted?'♪ 关':'♪ 开';
-  toast(BGM.muted?'背景音乐已关闭':'背景音乐已开启');
+  if(SFX.gain)SFX.gain.gain.value=BGM.muted?0:0.9;
+  if(BGM.muted){bgmStop();stopRumble();stopWave();}
+  else bgmStart();
+  $('bgmLbl').textContent=BGM.muted?'音乐 关':'音乐';
+  toast(BGM.muted?'背景音乐与音效已关闭':'背景音乐与音效已开启');
 }
 function bgmStop(){BGM.on=false;if(BGM.timer){clearInterval(BGM.timer);BGM.timer=null;}}
 document.addEventListener('visibilitychange',function(){
-  if(document.hidden){if(BGM.on){bgmStop();BGM._wasOn=true;}}
+  if(document.hidden){stopRumble();stopWave();if(BGM.on){bgmStop();BGM._wasOn=true;}}
   else if(BGM._wasOn){BGM._wasOn=false;bgmStart();}
 });
+
+/* ================= 场景音效（程序生成 · 与画面同步） ================= */
+var SFX={gain:null,noise:null,wave:null,rumble:null,crashT:4,stepT:0,prevTramX:null,clackIdx:null};
+function sfxInit(){
+  if(!bgmEnsure())return false;
+  if(!SFX.gain){SFX.gain=BGM.ctx.createGain();SFX.gain.gain.value=BGM.muted?0:0.9;SFX.gain.connect(BGM.ctx.destination);}
+  if(!SFX.noise){
+    var c=BGM.ctx,len=Math.floor(c.sampleRate*2);
+    var b=c.createBuffer(1,len,c.sampleRate),d=b.getChannelData(0);
+    for(var i=0;i<len;i++)d[i]=Math.random()*2-1;
+    SFX.noise=b;
+  }
+  return true;
+}
+function sfxOn(){return sfxInit()&&BGM.ctx.state==='running'&&!BGM.muted;}
+function noiseBurst(t,dur,rate,ftype,freq,peak,atk){
+  if(!sfxOn())return;
+  var c=BGM.ctx,s=c.createBufferSource();
+  s.buffer=SFX.noise;s.loop=true;s.playbackRate.value=rate||1;
+  var f=c.createBiquadFilter();f.type=ftype||'lowpass';f.frequency.value=freq||800;
+  var gn=c.createGain();
+  gn.gain.setValueAtTime(0.0001,t);
+  gn.gain.exponentialRampToValueAtTime(Math.max(0.002,peak),t+(atk||0.01));
+  gn.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+  s.connect(f);f.connect(gn);gn.connect(SFX.gain);
+  s.start(t);s.stop(t+dur+0.05);
+}
+function tone(t,type,freq,freq2,dur,peak){
+  if(!sfxOn())return;
+  var c=BGM.ctx,o=c.createOscillator(),gn=c.createGain();
+  o.type=type;o.frequency.setValueAtTime(freq,t);
+  if(freq2)o.frequency.exponentialRampToValueAtTime(freq2,t+dur*0.85);
+  gn.gain.setValueAtTime(0.0001,t);
+  gn.gain.exponentialRampToValueAtTime(peak,t+0.012);
+  gn.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+  o.connect(gn);gn.connect(SFX.gain);
+  o.start(t);o.stop(t+dur+0.05);
+}
+/* 脚步声 */
+function footstep(){
+  if(!sfxOn())return;
+  var t=BGM.ctx.currentTime;
+  noiseBurst(t,0.1,0.5+Math.random()*0.25,'lowpass',460+Math.random()*300,0.3,0.006);
+  tone(t+0.006,'sine',132,72,0.09,0.13);
+}
+/* 海浪（海滩常驻） */
+function startWave(){
+  if(SFX.wave||!sfxInit())return;
+  var c=BGM.ctx;
+  var s=c.createBufferSource();s.buffer=SFX.noise;s.loop=true;
+  var bp=c.createBiquadFilter();bp.type='bandpass';bp.frequency.value=760;bp.Q.value=0.5;
+  var gn=c.createGain();gn.gain.value=0.1;
+  var lfo=c.createOscillator(),lg=c.createGain();
+  lfo.frequency.value=0.14;lg.gain.value=0.075;
+  lfo.connect(lg);lg.connect(gn.gain);
+  s.connect(bp);bp.connect(gn);gn.connect(SFX.gain);
+  try{s.start();lfo.start();}catch(e){}
+  SFX.wave={s:s,l:lfo};
+}
+function stopWave(){
+  if(!SFX.wave)return;
+  try{SFX.wave.s.stop();SFX.wave.l.stop();}catch(e){}
+  SFX.wave=null;
+}
+function waveCrash(){
+  if(!sfxOn())return;
+  var c=BGM.ctx,t=c.currentTime,s=c.createBufferSource();
+  s.buffer=SFX.noise;s.loop=true;
+  var f=c.createBiquadFilter();f.type='lowpass';
+  f.frequency.setValueAtTime(420,t);
+  f.frequency.linearRampToValueAtTime(2800,t+0.55);
+  f.frequency.linearRampToValueAtTime(500,t+1.9);
+  var gn=c.createGain();
+  gn.gain.setValueAtTime(0.0001,t);
+  gn.gain.linearRampToValueAtTime(0.3,t+0.5);
+  gn.gain.linearRampToValueAtTime(0.0001,t+2.0);
+  s.connect(f);f.connect(gn);gn.connect(SFX.gain);
+  s.start(t);s.stop(t+2.1);
+}
+/* 电车（火车站，与画面 tramX 完全同步） */
+function startRumble(){
+  if(SFX.rumble||!sfxInit())return;
+  var c=BGM.ctx;
+  var s=c.createBufferSource();s.buffer=SFX.noise;s.loop=true;s.playbackRate.value=0.7;
+  var lp=c.createBiquadFilter();lp.type='lowpass';lp.frequency.value=260;
+  var gn=c.createGain();gn.gain.value=0.0001;
+  var hum=c.createOscillator();hum.type='sawtooth';hum.frequency.value=78;
+  var hf=c.createBiquadFilter();hf.type='lowpass';hf.frequency.value=300;
+  var hg=c.createGain();hg.gain.value=0.05;
+  s.connect(lp);lp.connect(gn);
+  hum.connect(hf);hf.connect(hg);hg.connect(gn);
+  gn.connect(SFX.gain);
+  try{s.start();hum.start();}catch(e){}
+  SFX.rumble={s:s,h:hum,g:gn};
+}
+function stopRumble(){
+  if(!SFX.rumble)return;
+  try{SFX.rumble.s.stop();SFX.rumble.h.stop();}catch(e){}
+  SFX.rumble=null;
+}
+function tramBell(){
+  if(!sfxOn())return;
+  var t=BGM.ctx.currentTime;
+  tone(t,'triangle',1180,null,0.32,0.16);
+  tone(t+0.17,'triangle',1520,null,0.42,0.14);
+}
+function tramClack(v){
+  noiseBurst(BGM.ctx.currentTime,0.07,1.6,'bandpass',1700,v,0.004);
+}
+function updateStationSfx(t){
+  if(!sfxInit())return;
+  var tramX=((t*40)%620)-90;
+  if(SFX.prevTramX!=null&&SFX.prevTramX<=-50&&tramX>-50)tramBell();
+  SFX.prevTramX=tramX;
+  if(tramX<-60||tramX>W+40){stopRumble();SFX.clackIdx=null;return;}
+  if(!SFX.rumble)startRumble();
+  if(SFX.rumble){
+    var cx=tramX+43;
+    var prox=1-clamp(Math.abs(cx-W/2)/(W*0.8),0,1);
+    SFX.rumble.g.gain.value=(BGM.muted||BGM.ctx.state!=='running')?0.0001:0.05+prox*0.22;
+    var idx=Math.floor((tramX+90)/16);
+    if(SFX.clackIdx!=null&&idx!==SFX.clackIdx)tramClack(0.06+prox*0.16);
+    SFX.clackIdx=idx;
+  }
+}
+function updateAmbience(dt){
+  if(G.mode!=='play'){stopRumble();stopWave();SFX.prevTramX=null;return;}
+  if(G.scene==='station')updateStationSfx(tGlobal);
+  else{stopRumble();SFX.prevTramX=null;SFX.clackIdx=null;}
+  if(G.scene==='beach'){
+    startWave();
+    SFX.crashT-=dt;
+    if(SFX.crashT<=0){waveCrash();SFX.crashT=rnd(3.4,6.2);}
+  }else stopWave();
+}
 
 /* ================= 调色 ================= */
 var HAIRC=['#2b2320','#6b4226','#c98a3d','#e6cf8a','#d94f4f','#4f6ad9','#8d8d96','#c86bd0'];
@@ -713,6 +894,8 @@ function enterScene(id,px,py){
   G.mode='play';
   show('hud');updateHud();
   bgmStart();
+  stopRumble();stopWave();
+  SFX.prevTramX=null;SFX.clackIdx=null;SFX.crashT=rnd(1.2,2.8);moveTarget=null;
   bounds.y1=(id==='station')?168:(id==='beach')?204:(id==='island')?150:170;
   bounds.y2=H-18;
   if(id==='island'){bounds.x1=48;bounds.x2=432;bounds.y2=252;}
@@ -724,7 +907,7 @@ function enterScene(id,px,py){
 function updateHud(){
   var s=SCENES[G.scene];
   $('hudL').innerHTML='<b>'+G.name+'</b> · '+s.name+'<br><span style="color:#8b93b8">'+s.region+'</span>';
-  $('bFish').textContent=G.goldHome?'叫小金鱼 G':'小金鱼回家 G';
+  $('fishLbl').textContent=G.goldHome?'叫小金鱼':'小金鱼回家';
 }
 
 /* ================= 碰撞/移动 ================= */
@@ -761,6 +944,8 @@ function movePlayer(dt){
   }
   player.moving=!!(dx||dy);
   if(player.moving){
+    SFX.stepT-=dt;
+    if(SFX.stepT<=0){SFX.stepT=0.27;footstep();}
     var mag=Math.sqrt(dx*dx+dy*dy);
     if(mag>1){dx/=mag;dy/=mag;}
     var px=player.x,py=player.y;
@@ -1313,68 +1498,157 @@ function pickFish(){
   return pool[irnd(0,pool.length-1)];
 }
 
+/* ================= 16x16 像素实物图 ================= */
+function drawItemArt(X,id){
+  function P(a,b,w,h,c){X.fillStyle=c;X.fillRect(a,b,w,h);}
+  if(id==='ticket'){
+    P(1,4,14,8,'#efe3bd');P(1,4,14,1,'#c9b487');P(1,11,14,1,'#c9b487');
+    P(1,4,1,8,'#c9b487');P(14,4,1,8,'#c9b487');
+    P(3,6,10,2,'#c0392b');P(3,9,6,1,'#8a7a55');P(11,9,2,2,'#8a7a55');
+    P(4,4,1,1,'#fff');P(11,4,1,1,'#fff');P(4,11,1,1,'#fff');P(11,11,1,1,'#fff');
+  }else if(id==='clock'){
+    P(3,2,10,12,'#8a6a44');P(4,3,8,10,'#f7f3e6');P(5,4,6,8,'#fffdf2');
+    P(7,5,1,4,'#2b2b33');P(7,8,3,1,'#2b2b33');P(7,7,1,1,'#c0392b');
+    P(2,7,1,2,'#8a6a44');P(13,7,1,2,'#8a6a44');
+    P(5,4,6,1,'#e8e2d0');
+  }else if(id==='postcard'){
+    P(1,4,14,8,'#f2ead2');P(1,4,14,1,'#d8cdb0');
+    P(11,5,3,3,'#e05a7a');P(11,5,3,1,'#f29ab0');
+    P(3,6,6,1,'#5aa8c9');P(3,8,5,1,'#6fbf5f');P(3,10,7,1,'#a86bd0');
+    P(9,10,3,1,'#c9a44a');
+  }else if(id==='tram'){
+    P(2,4,12,8,'#2e7d50');P(2,4,12,2,'#256641');
+    P(4,7,3,3,'#cfeaf5');P(8,7,3,3,'#cfeaf5');
+    P(4,12,3,2,'#222');P(10,12,3,2,'#222');
+    P(6,1,1,3,'#333');P(6,1,3,1,'#333');
+    P(12,6,2,1,'#ffe9a8');
+  }else if(id==='shell'){
+    P(6,2,4,2,'#f7d9c4');P(4,4,8,2,'#f2c9b0');P(3,6,10,2,'#eebda3');
+    P(2,8,12,2,'#e8b096');P(4,10,8,2,'#e0a48b');P(6,12,4,2,'#d99880');
+    P(7,3,1,9,'#c98a72');P(5,5,1,7,'#c98a72');P(10,5,1,7,'#c98a72');
+    P(7,13,2,1,'#b87a63');
+  }else if(id==='icecream'){
+    P(5,4,6,2,'#cfeeb8');P(4,6,8,3,'#b8e0a8');P(5,9,6,1,'#a8d498');
+    P(5,4,2,1,'#e8f8e0');
+    P(6,10,4,1,'#d9a566');P(7,11,2,1,'#c9934f');P(7,12,2,1,'#d9a566');P(7,13,1,1,'#c9934f');
+  }else if(id==='penguin'){
+    P(5,2,6,3,'#3a4a5c');P(4,5,8,7,'#3a4a5c');
+    P(5,7,6,5,'#f2f2ee');
+    P(6,4,2,2,'#fff');P(9,4,2,2,'#fff');P(6,4,1,1,'#222');P(9,4,1,1,'#222');
+    P(7,7,2,1,'#f0ad4e');
+    P(3,6,1,4,'#2b3644');P(12,6,1,4,'#2b3644');
+    P(5,13,2,1,'#f0ad4e');P(9,13,2,1,'#f0ad4e');
+  }else if(id==='drift'){
+    P(1,7,14,4,'#a08464');P(2,6,5,1,'#b89878');P(9,11,5,1,'#8a6f52');
+    P(4,8,2,1,'#6b4226');P(10,8,1,1,'#6b4226');P(7,7,3,1,'#c0a484');
+    P(13,7,2,1,'#8a6f52');
+  }
+}
+function paintIcon(c,kind,key,has){
+  var X=c.getContext('2d');X.imageSmoothingEnabled=false;
+  X.fillStyle='#fdf6e2';X.fillRect(0,0,16,16);
+  if(!has){
+    X.fillStyle='#b08d55';
+    X.fillRect(5,3,6,2);X.fillRect(9,5,2,2);X.fillRect(7,7,3,2);
+    X.fillRect(7,9,2,1);X.fillRect(7,11,2,3);X.fillRect(5,11,2,2);
+    return;
+  }
+  if(kind==='fish'){
+    var sv=g;g=X;
+    drawMiniFish(8,8,key,true);
+    g=sv;
+    X.fillStyle='rgba(90,150,200,.5)';X.fillRect(11,3,2,1);X.fillRect(12,1,1,1);
+  }else drawItemArt(X,key);
+}
+function paintIcons(root){
+  var cs=root.querySelectorAll('canvas[data-ic]');
+  for(var i=0;i<cs.length;i++){
+    var c=cs[i],kind=c.getAttribute('data-ic'),key=c.getAttribute('data-id'),
+        has=c.getAttribute('data-has')==='1';
+    if(kind==='fish'){
+      var col='#8fb3c9';
+      for(var f=0;f<FISHES.length;f++)if(FISHES[f].id===key)col=FISHES[f].c;
+      paintIcon(c,'fish',col,has);
+    }else paintIcon(c,'item',key,has);
+  }
+}
+
 /* ================= 湖泊管理 ================= */
 function openLake(){
   show('panel');$('pTitle').textContent='小湖泊 · 水族箱';
   $('pTabs').innerHTML='';
-  var body=$('panelBody'),html='<div class="grid">';
-  html+='<div class="item" style="grid-column:1/-1"><b>湖里 '+G.lake.length+' 只</b>把图鉴里钓到的鱼放进来，它们会在湖里游来游去。</div>';
   var have={};
   for(var i=0;i<G.lake.length;i++)have[G.lake[i]]=(have[G.lake[i]]||0)+1;
-  for(var f=0;f<FISHES.length;f++){
-    var fd=FISHES[f],n=G.fish[fd.id]||0,inLake=have[fd.id]||0;
-    if(n<=0){html+='<div class="item lock"><b>'+fd.n+'</b><span class="no">还没钓到</span></div>';continue;}
-    html+='<div class="item"><b style="color:'+fd.c+'">'+fd.n+'</b>图鉴 '+n+' 条 · 湖中 '+inLake+' 条<br>';
-    if(inLake>0)html+='<span class="btn" style="display:inline-block;margin-top:3px;font-size:10px;padding:1px 6px" data-lakeout="'+fd.id+'">捞回 1 条</span> ';
-    if(n>inLake)html+='<span class="btn" style="display:inline-block;margin-top:3px;font-size:10px;padding:1px 6px;background:#2e6b4f" data-lakein="'+fd.id+'">放入 1 条</span>';
+  var L=$('pgL');
+  L.innerHTML='<h4>◆ 湖里 '+G.lake.length+' 只</h4>'+
+    '<div class="item" style="grid-column:1/-1">把图鉴里钓到的鱼放进来，它们会在湖里游来游去。<br>用右页的「放入 / 捞回」管理。</div>'+
+    '<div style="margin-top:8px;border:3px solid #2f7fb8;background:#5ec8e0;padding:8px;display:flex;gap:8px;'+
+    'justify-content:center;align-items:center;box-shadow:inset 0 -6px 0 rgba(0,60,120,.25)">'+
+    '<canvas class="ic" width="16" height="16" data-ic="fish" data-id="clown" data-has="1"></canvas>'+
+    '<canvas class="ic" width="16" height="16" data-ic="fish" data-id="jelly" data-has="1"></canvas>'+
+    '<canvas class="ic" width="16" height="16" data-ic="fish" data-id="seahor" data-has="1"></canvas>'+
+    '</div>';
+  var body=$('pgR'),html='<h4>◆ 放养管理</h4><div class="grid">';
+  for(var f2=0;f2<FISHES.length;f2++){
+    var fd=FISHES[f2],n=G.fish[fd.id]||0,inLake=have[fd.id]||0;
+    html+='<div class="item'+(n?'':' lock')+'">'+
+      '<canvas class="ic" width="16" height="16" data-ic="fish" data-id="'+fd.id+'" data-has="'+(n?1:0)+'"></canvas>'+
+      '<b style="color:'+(n?fd.c:'#7d6644')+'">'+(n?fd.n:'？？？')+'</b>';
+    if(n<=0)html+='<span class="no">还没钓到</span>';
+    else{
+      html+='图鉴 '+n+' · 湖中 '+inLake+'<br>';
+      if(inLake>0)html+='<span class="btn" data-lakeout="'+fd.id+'">捞回</span> ';
+      if(n>inLake)html+='<span class="btn" style="background:#2e6b4f;border-color:#78d6a5" data-lakein="'+fd.id+'">放入</span>';
+    }
     html+='</div>';
   }
   html+='</div>';
   body.innerHTML=html;
+  paintIcons(L);paintIcons(body);
   var ins=body.querySelectorAll('[data-lakein]');
   for(var a=0;a<ins.length;a++)ins[a].onclick=function(){
     var id=this.getAttribute('data-lakein');
-    if(!G.lake.length&&id){/*ok*/}
-    var haveN=0;for(var i=0;i<G.lake.length;i++)if(G.lake[i]===id)haveN++;
+    var haveN=0;for(var i2=0;i2<G.lake.length;i2++)if(G.lake[i2]===id)haveN++;
     if(haveN<(G.fish[id]||0)){G.lake.push(id);toast('放了一条进湖里～');saveGame();openLake();}
   };
   var outs=body.querySelectorAll('[data-lakeout]');
   for(var b=0;b<outs.length;b++)outs[b].onclick=function(){
     var id=this.getAttribute('data-lakeout');
-    for(var i=0;i<G.lake.length;i++){if(G.lake[i]===id){G.lake.splice(i,1);break;}}
+    for(var i3=0;i3<G.lake.length;i3++){if(G.lake[i3]===id){G.lake.splice(i3,1);break;}}
     toast('捞回了 1 条');saveGame();openLake();
   };
 }
 
-/* ================= 图鉴 ================= */
+/* ================= 图鉴（翻开的书） ================= */
 var bookTab=0;
 function openBook(){
   show('panel');$('pTitle').textContent='旅行图鉴';
-  $('pTabs').innerHTML='<span class="tab'+(bookTab===0?' on':'')+'" data-t="0">纪念品</span>'+
-                       '<span class="tab'+(bookTab===1?' on':'')+'" data-t="1">鱼类图鉴</span>';
-  var tabs=$('pTabs').querySelectorAll('.tab');
-  for(var i=0;i<tabs.length;i++)tabs[i].onclick=function(){bookTab=+this.getAttribute('data-t');openBook();};
-  var body=$('panelBody'),html='';
-  if(bookTab===0){
-    var got=0;for(var k in G.items)if(G.items[k])got++;
-    html+='<div class="item" style="grid-column:1/-1"><b>墨尔本纪念品 '+got+' / '+ITEMS.length+'</b>在场景里找到它们！</div><div class="grid">';
-    for(var i2=0;i2<ITEMS.length;i2++){
-      var it=ITEMS[i2],has=G.items[it.id];
-      html+='<div class="item'+(has?'':' lock')+'"><b>'+(has?it.n:'？？？')+'</b>'+
-        (has?it.d:'<span class="no">'+(it.s==='station'?'火车站':'海滩')+'未找到</span>')+'</div>';
-    }
-    html+='</div>';
-  }else{
-    var gf=0;for(var k2 in G.fish)if(G.fish[k2])gf++;
-    html+='<div class="item" style="grid-column:1/-1"><b>鱼类 '+gf+' / '+FISHES.length+'</b>在圣基尔达海滩抛竿钓鱼！</div><div class="grid">';
-    for(var i3=0;i3<FISHES.length;i3++){
-      var fd=FISHES[i3],n=G.fish[fd.id]||0;
-      html+='<div class="item'+(n?'':' lock')+'"><b style="color:'+(n?fd.c:'')+'">'+(n?fd.n:'？？？')+'</b>'+
-        (n?'钓获 '+n+' 次 · 湖中 '+countLake(fd.id)+' 条':'<span class="no">尚未发现</span>')+'</div>';
-    }
-    html+='</div>';
+  $('pTabs').innerHTML='';
+  var got=0;for(var k in G.items)if(G.items[k])got++;
+  var h1='<h4>◆ 墨尔本纪念品 '+got+' / '+ITEMS.length+'</h4><div class="grid">';
+  for(var i=0;i<ITEMS.length;i++){
+    var it=ITEMS[i],has=G.items[it.id];
+    h1+='<div class="item'+(has?'':' lock')+'">'+
+      '<canvas class="ic" width="16" height="16" data-ic="item" data-id="'+it.id+'" data-has="'+(has?1:0)+'"></canvas>'+
+      '<b>'+(has?it.n:'？？？')+'</b>'+
+      (has?'<span class="desc">'+it.d+'</span>':'<span class="no">'+(it.s==='station'?'火车站':'海滩')+'未找到</span>')+
+      '</div>';
   }
-  body.innerHTML=html;
+  h1+='</div>';
+  var gf=0;for(var k2 in G.fish)if(G.fish[k2])gf++;
+  var h2='<h4>◆ 鱼类图鉴 '+gf+' / '+FISHES.length+'</h4><div class="grid">';
+  for(var j=0;j<FISHES.length;j++){
+    var fd=FISHES[j],n=G.fish[fd.id]||0;
+    h2+='<div class="item'+(n?'':' lock')+'">'+
+      '<canvas class="ic" width="16" height="16" data-ic="fish" data-id="'+fd.id+'" data-has="'+(n?1:0)+'"></canvas>'+
+      '<b style="color:'+(n?fd.c:'#7d6644')+'">'+(n?fd.n:'？？？')+'</b>'+
+      (n?'钓获 '+n+' 次<br>湖中 '+countLake(fd.id)+' 条':'<span class="no">尚未发现</span>')+'</div>';
+  }
+  h2+='</div>';
+  var L=$('pgL'),R2=$('pgR');
+  L.innerHTML=h1;R2.innerHTML=h2;
+  paintIcons(L);paintIcons(R2);
+  L.scrollTop=0;R2.scrollTop=0;
 }
 function countLake(id){var c=0;for(var i=0;i<G.lake.length;i++)if(G.lake[i]===id)c++;return c;}
 
@@ -1752,6 +2026,48 @@ $('bFish').onclick=function(){toggleGoldfish()};
 $('bBgm').onclick=function(){bgmToggle()};
 $('bFull').onclick=function(){toggleFull()};
 
+/* HUD 像素小图标（9x9） */
+function drawHudIcon(X,k){
+  function P(a,b,w,h,c){X.fillStyle=c;X.fillRect(a,b,w,h);}
+  X.clearRect(0,0,9,9);
+  if(k==='map'){
+    P(0,2,3,5,'#e8d7a8');P(3,1,3,7,'#cfe0b8');P(6,2,3,5,'#e8d7a8');
+    P(2,2,1,5,'#a08455');P(5,2,1,5,'#a08455');
+    P(6,4,2,2,'#e8384f');
+  }else if(k==='scene'){
+    P(0,1,9,7,'#f7f3e6');P(1,2,7,5,'#8fd0e8');
+    P(1,6,4,1,'#3f7f5a');P(3,4,3,3,'#2f6b4a');P(5,6,3,1,'#3f7f5a');
+    P(6,2,2,2,'#ffe066');
+  }else if(k==='book'){
+    P(0,2,4,6,'#f2e5c1');P(5,2,4,6,'#f2e5c1');
+    P(0,2,4,1,'#c9a44a');P(5,2,4,1,'#c9a44a');
+    P(4,2,1,6,'#7a3b1e');
+    P(1,4,2,1,'#a08455');P(6,4,2,1,'#a08455');P(1,6,2,1,'#a08455');P(6,6,2,1,'#a08455');
+  }else if(k==='cloth'){
+    P(2,1,5,2,'#4a90d9');P(0,2,2,3,'#4a90d9');P(7,2,2,3,'#4a90d9');
+    P(2,3,5,5,'#3f7fc0');P(3,1,3,1,'#2f5f9a');
+  }else if(k==='fish'){
+    P(1,3,6,4,'#f08a2a');P(1,3,6,1,'#f7a94f');P(7,2,2,6,'#d9741f');
+    P(2,4,1,1,'#fff');P(3,4,1,1,'#222');P(2,7,2,1,'#d9741f');
+  }else if(k==='music'){
+    P(6,0,2,2,'#ffe9a8');P(6,2,1,5,'#ffe9a8');P(4,2,3,1,'#ffd873');
+    P(3,6,4,2,'#ffe9a8');P(4,5,2,1,'#ffd873');
+  }else if(k==='full'){
+    P(0,0,3,1,'#7ee0b0');P(0,0,1,3,'#7ee0b0');
+    P(6,0,3,1,'#7ee0b0');P(8,0,1,3,'#7ee0b0');
+    P(0,8,3,1,'#7ee0b0');P(0,6,1,3,'#7ee0b0');
+    P(6,8,3,1,'#7ee0b0');P(8,6,1,3,'#7ee0b0');
+  }
+}
+function paintHudIcons(){
+  var cs=document.querySelectorAll('canvas.hi');
+  for(var i=0;i<cs.length;i++){
+    var X=cs[i].getContext('2d');X.imageSmoothingEnabled=false;
+    drawHudIcon(X,cs[i].getAttribute('data-hi'));
+  }
+}
+paintHudIcons();
+
 /* ================= 预览绘制 ================= */
 var pvCvs=$('pv'),pvG=pvCvs.getContext('2d');
 function drawPreview(){
@@ -1776,6 +2092,7 @@ function loop(ts){
 function update(dt){
   if(toastT>0){toastT-=dt;if(toastT<=0)$('toast').classList.remove('show');}
   syncActBtns();
+  updateAmbience(dt);
   if(G.mode==='intro'){intro.t+=dt;return;}
   if(G.mode==='creator'){pvT+=dt;if(pvT>0.28){pvT=0;pvFrame=(pvFrame+1)%4;}drawPreview();return;}
   if(G.mode==='play'){
