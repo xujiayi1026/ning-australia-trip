@@ -240,6 +240,8 @@ var SCALE=2;
 function resize(){
   var s=Math.min(window.innerWidth/W,window.innerHeight/H);
   if(!isFinite(s)||s<=0)s=1;
+  var full=!!(document.fullscreenElement||document.webkitFullscreenElement);
+  if(!full)s=Math.min(s,1280/W);
   SCALE=s;
   var w=Math.max(1,Math.round(W*s)),h=Math.max(1,Math.round(H*s));
   cv.style.width=w+'px';cv.style.height=h+'px';
