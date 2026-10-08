@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
@@ -414,39 +414,34 @@ document.addEventListener('visibilitychange',function(){
   else if(BGM._wasOn){BGM._wasOn=false;bgmStart();}
 });
 
-/* ================= 小金鱼语音（浏览器中文 TTS，零素材） ================= */
-var VOICE={v:null};
-function voicePick(){
+/* ================= 小金鱼语音（自定义录音 · 已移除浏览器 TTS） =================
+  想用自己的录音：
+   1) 把音频文件（mp3 / wav / ogg / m4a）放到游戏 HTML 文件旁边，例如 voice/hello.mp3
+   2) 在下面 VOICE_FILES 里填「台词 id → 文件路径」，例如 hello:'voice/hello.mp3'
+   3) 不填的 id 不发声（默认全部静音）；路径也可填 data:audio/mp3;base64,... 直接内嵌
+  可用 id：
+     hello  和小金鱼对话时     home  回到家园小岛     bye  小金鱼回家
+     come  小金鱼出来玩       bite  鱼上钩            catch  钓到鱼
+*/
+var VOICE_FILES={
+  // hello:'voice/hello.mp3',
+  // home:'voice/home.mp3',
+  // bye:'voice/bye.mp3',
+  // come:'voice/come.mp3',
+  // bite:'voice/bite.mp3',
+  // catch:'voice/catch.mp3'
+};
+var VOICE={a:null};
+function voiceStop(){try{if(VOICE.a){VOICE.a.pause();VOICE.a.currentTime=0;VOICE.a=null;}}catch(e){}}
+function say(id){
   try{
-    if(!('speechSynthesis' in window))return null;
-    var vs=speechSynthesis.getVoices()||[],best=null;
-    for(var i=0;i<vs.length;i++){
-      var lang=(vs[i].lang||'').toLowerCase(),name=(vs[i].name||'').toLowerCase();
-      if(lang.indexOf('zh')!==0)continue;
-      if(/xiaoxiao|yaoyao|huihui|lili|google|tingting|xiaoyi|yunxi/.test(name))return vs[i];
-      if(!best)best=vs[i];
-    }
-    return best;
-  }catch(e){return null;}
-}
-function voiceStop(){try{if('speechSynthesis' in window)speechSynthesis.cancel();}catch(e){}}
-function say(t){
-  try{
-    if(!t||!('speechSynthesis' in window))return;
-    if(BGM.muted)return;
-    if(!VOICE.v)VOICE.v=voicePick();
-    speechSynthesis.cancel();
-    var u=new SpeechSynthesisUtterance(t);
-    u.lang='zh-CN';u.pitch=1.35;u.rate=1.05;u.volume=1;
-    if(VOICE.v)u.voice=VOICE.v;
-    var old=(BGM.master&&!BGM.muted)?BGM.master.gain.value:0;
-    if(BGM.master&&!BGM.muted)BGM.master.gain.value=0.15;
-    var back=function(){try{if(BGM.master&&!BGM.muted)BGM.master.gain.value=old;}catch(e){}};
-    u.onend=back;u.onerror=back;
-    speechSynthesis.speak(u);
+    if(!id||BGM.muted)return;
+    var src=VOICE_FILES[id];if(!src)return;
+    voiceStop();
+    var a=new Audio(src);VOICE.a=a;
+    a.play().catch(function(){});
   }catch(e){}
 }
-try{if('speechSynthesis' in window){speechSynthesis.onvoiceschanged=function(){VOICE.v=voicePick();};VOICE.v=voicePick();}}catch(e){}
 
 /* ================= 场景音效（程序生成 · 与画面同步） ================= */
 var SFX={gain:null,noise:null,wave:null,rumble:null,crashT:4,stepT:0,prevTramX:null,clackIdx:null};
@@ -986,7 +981,7 @@ function syncActBtns(){
 /* ================= 对话系统 ================= */
 var dialog={active:false,lines:[],idx:0,who:'',look:null,onEnd:null,lineShown:0,timer:0};
 function startDialog(who,look,lines,onEnd){
-  if(who==='小金鱼')say(pick(['今天去哪玩？','我在这儿呢！','嘿嘿，找我呀？']));
+  if(who==='小金鱼')say('hello');
   dialog.active=true;dialog.lines=lines;dialog.idx=0;dialog.who=who;
   dialog.look=look;dialog.onEnd=onEnd||null;dialog.lineShown=0;dialog.timer=0;
   show('dlg');renderDialog();
@@ -1083,7 +1078,7 @@ function enterScene(id,px,py){
   G.mode='play';
   show('hud');updateHud();
   bgmStart();
-  if(id==='island')say('到家啦！');
+  if(id==='island')say('home');
   stopRumble();stopWave();
   SFX.prevTramX=null;SFX.clackIdx=null;SFX.crashT=rnd(1.2,2.8);moveTarget=null;
   bounds.y1=(id==='station')?168:(id==='beach')?204:(id==='island')?150:170;
@@ -1177,10 +1172,10 @@ function toggleGoldfish(){
   G.goldHome=!G.goldHome;
   if(G.goldHome){
     toast('小金鱼：那我先回岛上等你啦！');
-    say(pick(['那我先回岛上等你啦！','拜拜，记得想我！','我先回家咯~']));
+    say('bye');
   }else{
     toast('小金鱼：我来啦我来啦！');
-    say(pick(['我来啦我来啦！','来啦来啦！','找我玩吗？']));
+    say('come');
   }
   updateHud();saveGame();
 }
@@ -1775,7 +1770,7 @@ function updateFishing(dt){
       fish.phase=1;fish.got=pickFish();
       var p=fishPt();
       banner(pick(['上钩啦！','咬钩了！','来了来了！']));
-      say(pick(['咬钩啦！','上钩了上钩了！','来了来了！']));
+      say('bite');
       shake(5);buzz(60);sfxHook();
       addSplash(p.x,p.y,10);
       $('fSt').textContent='！！鱼上钩了！';
@@ -1808,7 +1803,7 @@ function updateFishing(dt){
       addFish(fish.got.id);
       var fp=fishPt();
       banner('钓到 '+fish.got.n+'！');
-      say('钓到啦！好厉害！');
+      say('catch');
       sfxCatch();shake(3);buzz([40,60,40]);
       addSplash(fp.x,fp.y,16,['#ffe9a8','#7ee0b0','#f0c04a','#e05a7a','#cfeaf5']);
       $('fSt').textContent='钓到了 '+fish.got.n+'！';
